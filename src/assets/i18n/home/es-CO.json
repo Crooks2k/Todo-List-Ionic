@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "Lista de Tareas",
+    "subtitle": "Bienvenido a tu gestor de tareas",
+    "description": "Aplicación de gestión de tareas con Ionic y Angular",
+    "buttons": {
+      "addTask": "Agregar Tarea",
+      "viewTasks": "Ver Tareas"
+    },
+    "messages": {
+      "noTasks": "No tienes tareas pendientes",
+      "loading": "Cargando..."
+    }
+  }
+}
