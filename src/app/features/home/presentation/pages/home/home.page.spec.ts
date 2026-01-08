@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { HomePage } from './home.page';
-import { TranslateProvider } from '../../../../../shared/providers/translate.provider';
+import { TranslateProvider } from '@shared/providers/translate.provider';
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -11,8 +11,7 @@ describe('HomePage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HomePage],
-      imports: [IonicModule.forRoot(), HttpClientTestingModule],
+      imports: [HomePage, IonicModule.forRoot(), HttpClientTestingModule],
       providers: [TranslateProvider],
     }).compileComponents();
 

@@ -4,10 +4,9 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 import { FeaturesHomeRoutingModule } from './features-home-routing.module';
-import { HomePage } from './pages/home/home.page';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, FeaturesHomeRoutingModule],
-  declarations: [HomePage],
+  declarations: [],
 })
 export class FeaturesHomeModule {}

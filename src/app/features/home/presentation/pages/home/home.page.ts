@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateProvider } from '../../../../../shared/providers/translate.provider';
+import { TranslateProvider } from '@shared/providers/translate.provider';
 import { HomeConfig } from './home.config';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  imports: [IonicModule],
 })
 export class HomePage implements OnInit {
   public view: any = {};
