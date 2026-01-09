@@ -1,0 +1,12 @@
+<ion-card class="action-card" button (click)="onCardClick()">
+  <ion-card-content>
+    <div class="card-icon-wrapper" [attr.data-color]="color">
+      <ion-icon [name]="icon" class="card-icon"></ion-icon>
+    </div>
+    <div class="card-text">
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
+    </div>
+    <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+  </ion-card-content>
+</ion-card>

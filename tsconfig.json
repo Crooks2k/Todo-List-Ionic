@@ -18,7 +18,14 @@
     "target": "es2022",
     "module": "es2020",
     "lib": ["es2018", "dom"],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+      "@shared/*": ["src/app/shared/*"],
+      "@features/home/*": ["src/app/features/home/*"],
+      "@features/tasks/*": ["src/app/features/tasks/*"],
+      "@features/releases/*": ["src/app/features/releases/*"],
+      "@features/*": ["src/app/features/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -1,0 +1,109 @@
+.category-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--app-spacing-sm) var(--app-spacing-md);
+  background: var(--app-background-light);
+  border-radius: var(--app-border-radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--app-transition-fast);
+  min-height: 44px;
+
+  &:hover {
+    background: var(--app-background-white);
+    border-color: var(--ion-color-primary);
+  }
+}
+
+.selector-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.selected-category {
+  display: flex;
+  align-items: center;
+  gap: var(--app-spacing-sm);
+  color: var(--app-text-primary);
+  font-size: 16px;
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.placeholder {
+  color: var(--app-text-tertiary);
+  font-size: 16px;
+}
+
+.chevron {
+  font-size: 20px;
+  color: var(--app-text-secondary);
+  flex-shrink: 0;
+}
+
+.modal-content {
+  --background: var(--app-background-white);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--app-spacing-xxl) var(--app-spacing-lg);
+  text-align: center;
+
+  ion-icon {
+    font-size: 64px;
+    color: var(--app-text-disabled);
+    margin-bottom: var(--app-spacing-md);
+  }
+
+  p {
+    font-size: var(--app-font-size-md);
+    color: var(--app-text-secondary);
+    margin: 0;
+  }
+}
+
+ion-list {
+  background: transparent;
+  padding: var(--app-spacing-sm) var(--app-spacing-md);
+}
+
+.category-item {
+  --background: transparent;
+  --padding-start: var(--app-spacing-md);
+  --padding-end: var(--app-spacing-md);
+  --border-radius: var(--app-border-radius-sm);
+  margin-bottom: var(--app-spacing-xs);
+  border-radius: var(--app-border-radius-sm);
+  border-bottom: 1px solid var(--app-background-light);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.selected {
+    --background: var(--app-primary-overlay);
+  }
+
+  &:hover {
+    --background: var(--app-background-light);
+  }
+
+  .category-icon {
+    font-size: 24px;
+    margin-right: var(--app-spacing-sm);
+  }
+
+  ion-label {
+    font-size: var(--app-font-size-md);
+    color: var(--app-text-primary);
+    font-weight: 500;
+  }
+}
