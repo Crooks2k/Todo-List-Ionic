@@ -1,0 +1,35 @@
+.content-wrapper {
+  background: var(--app-background-light);
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--app-spacing-xxl) var(--app-spacing-lg);
+  text-align: center;
+
+  ion-icon {
+    font-size: var(--app-font-size-icon);
+    color: var(--ion-color-primary);
+    margin-bottom: var(--app-spacing-md);
+  }
+
+  h3 {
+    font-size: var(--app-font-size-xl);
+    font-weight: 600;
+    color: var(--app-text-secondary);
+    margin: 0 0 var(--app-spacing-xs) 0;
+  }
+
+  p {
+    font-size: var(--app-font-size-sm);
+    color: var(--app-text-tertiary);
+    margin: 0;
+  }
+}

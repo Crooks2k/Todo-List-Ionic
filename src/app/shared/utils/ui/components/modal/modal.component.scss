@@ -1,0 +1,32 @@
+ion-modal {
+  --width: 90%;
+  --max-width: 500px;
+  --height: auto;
+  --max-height: 90%;
+  --border-radius: var(--app-border-radius-lg);
+
+  &[data-size='small'] {
+    --max-width: 400px;
+  }
+
+  &[data-size='large'] {
+    --max-width: 700px;
+  }
+}
+
+ion-content {
+  --background: var(--app-background-white);
+}
+
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --color: white;
+
+  ion-title {
+    font-weight: 600;
+  }
+
+  ion-button {
+    --color: white;
+  }
+}

@@ -1,0 +1,92 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBackToHome()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ view.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-wrapper">
+    <div class="category-list">
+      @for (category of categories$ | async; track category.id) {
+        <ion-item-sliding>
+          <ion-item
+            lines="none"
+            class="category-item"
+            button
+            (click)="onEditCategory(category)"
+          >
+            <ion-icon
+              [name]="category.icon || 'pricetag'"
+              slot="start"
+              [style.color]="category.color"
+              class="category-icon"
+            ></ion-icon>
+            <ion-label>
+              <h2>{{ category.name }}</h2>
+            </ion-label>
+            <ion-icon
+              name="chevron-forward"
+              slot="end"
+              class="chevron-icon"
+            ></ion-icon>
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option
+              color="danger"
+              (click)="onDeleteCategory(category.id)"
+            >
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      } @empty {
+        <div class="empty-state">
+          <ion-icon name="pricetags-outline"></ion-icon>
+          <h3>{{ view.emptyState }}</h3>
+          <p>{{ view.emptyStateDescription }}</p>
+        </div>
+      }
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="onAddCategory()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+</ion-content>
+
+<ion-modal
+  [isOpen]="showModal"
+  (didDismiss)="closeModal()"
+  [backdropDismiss]="true"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>{{
+          selectedCategory ? 'Editar Categoría' : 'Nueva Categoría'
+        }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding modal-content">
+      <app-category-form
+        [category]="selectedCategory"
+        (save)="onSaveCategory($event)"
+        (cancelled)="closeModal()"
+      ></app-category-form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
