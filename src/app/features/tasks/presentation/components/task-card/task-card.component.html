@@ -18,17 +18,17 @@
             {{ task.title }}
           </h3>
           @if (task.description) {
-          <p class="task-description">{{ task.description }}</p>
+            <p class="task-description">{{ task.description }}</p>
           }
         </div>
       </div>
 
       <div class="header-right">
         @if (task.dueDate) {
-        <div class="due-date" [class.overdue]="isOverdue">
-          <ion-icon name="calendar-outline"></ion-icon>
-          <span>{{ task.dueDate | date : "dd/MM" }}</span>
-        </div>
+          <div class="due-date" [class.overdue]="isOverdue">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>{{ task.dueDate | date: 'dd/MM' }}</span>
+          </div>
         }
         <ion-button
           fill="clear"
@@ -51,47 +51,50 @@
       </div>
 
       @if (hasSubTasks) {
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div
-            class="progress-fill"
-            [style.width.%]="progress"
-            [style.background]="categoryColor"
-          ></div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              [style.width.%]="progress"
+              [style.background]="categoryColor"
+            ></div>
+          </div>
+          <span class="progress-text">{{ progress }}%</span>
         </div>
-        <span class="progress-text">{{ progress }}%</span>
-      </div>
       }
     </div>
 
     @if (hasSubTasks) {
-    <div class="expand-section">
-      <ion-button
-        fill="clear"
-        size="small"
-        (click)="toggleExpand()"
-        class="expand-button"
-      >
-        <ion-icon
-          [name]="expanded ? 'chevron-up' : 'chevron-down'"
-          slot="start"
-        ></ion-icon>
-        {{ expanded ? labels.collapse : labels.expand }}
-      </ion-button>
-    </div>
-
-    @if (expanded) {
-    <div class="subtasks-container">
-      @for (subTask of task.subTasks; track subTask.id) {
-      <div class="subtask-item">
-        <ion-checkbox
-          [checked]="subTask.completed"
-          (ionChange)="onToggleSubTask(subTask)"
-        ></ion-checkbox>
-        <span [class.completed]="subTask.completed">{{ subTask.title }}</span>
+      <div class="expand-section">
+        <ion-button
+          fill="clear"
+          size="small"
+          (click)="toggleExpand()"
+          class="expand-button"
+        >
+          <ion-icon
+            [name]="expanded ? 'chevron-up' : 'chevron-down'"
+            slot="start"
+          ></ion-icon>
+          {{ expanded ? labels.collapse : labels.expand }}
+        </ion-button>
       </div>
+
+      @if (expanded) {
+        <div class="subtasks-container">
+          @for (subTask of task.subTasks; track subTask.id) {
+            <div class="subtask-item">
+              <ion-checkbox
+                [checked]="subTask.completed"
+                (ionChange)="onToggleSubTask(subTask)"
+              ></ion-checkbox>
+              <span [class.completed]="subTask.completed">{{
+                subTask.title
+              }}</span>
+            </div>
+          }
+        </div>
       }
-    </div>
-    } }
+    }
   </div>
 </div>

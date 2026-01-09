@@ -42,20 +42,20 @@
 
     <div class="tasks-container">
       @for (task of tasks$ | async; track task.id) {
-      <app-task-card
-        [task]="task"
-        [category]="getCategoryForTask(task)"
-        (toggleComplete)="onToggleTask($event)"
-        (toggleSubTask)="onToggleSubTask($event)"
-        (edit)="onEditTask($event)"
-        (delete)="onDeleteTask($event)"
-      ></app-task-card>
+        <app-task-card
+          [task]="task"
+          [category]="getCategoryForTask(task)"
+          (toggleComplete)="onToggleTask($event)"
+          (toggleSubTask)="onToggleSubTask($event)"
+          (edit)="onEditTask($event)"
+          (delete)="onDeleteTask($event)"
+        ></app-task-card>
       } @empty {
-      <div class="empty-state">
-        <ion-icon name="checkbox-outline"></ion-icon>
-        <h3>{{ emptyStateMessage }}</h3>
-        <p>{{ view.emptyStateDescription }}</p>
-      </div>
+        <div class="empty-state">
+          <ion-icon name="checkbox-outline"></ion-icon>
+          <h3>{{ emptyStateMessage }}</h3>
+          <p>{{ view.emptyStateDescription }}</p>
+        </div>
       }
     </div>
   </div>

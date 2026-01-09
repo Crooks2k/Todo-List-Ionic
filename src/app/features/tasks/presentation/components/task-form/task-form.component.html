@@ -10,9 +10,9 @@
     </ion-item>
 
     @if (isTitleInvalid()) {
-    <ion-text color="danger" class="error-text">
-      <small>{{ labels.titleError }}</small>
-    </ion-text>
+      <ion-text color="danger" class="error-text">
+        <small>{{ labels.titleError }}</small>
+      </ion-text>
     }
   </div>
 
@@ -72,25 +72,28 @@
     </div>
 
     <div formArrayName="subTasks" class="subtasks-list">
-      @for (subTask of viewModel.subTasksArray.controls; track $index; let i =
-      $index) {
-      <div [formGroupName]="i" class="subtask-input-group">
-        <ion-item lines="none" class="subtask-item">
-          <ion-input
-            formControlName="title"
-            [placeholder]="labels.subTaskPlaceholder"
-            type="text"
-          ></ion-input>
-          <ion-button
-            slot="end"
-            fill="clear"
-            color="danger"
-            (click)="onRemoveSubTask(i)"
-          >
-            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </div>
+      @for (
+        subTask of viewModel.subTasksArray.controls;
+        track $index;
+        let i = $index
+      ) {
+        <div [formGroupName]="i" class="subtask-input-group">
+          <ion-item lines="none" class="subtask-item">
+            <ion-input
+              formControlName="title"
+              [placeholder]="labels.subTaskPlaceholder"
+              type="text"
+            ></ion-input>
+            <ion-button
+              slot="end"
+              fill="clear"
+              color="danger"
+              (click)="onRemoveSubTask(i)"
+            >
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </div>
       }
     </div>
   </div>

@@ -1,11 +1,15 @@
-<ion-modal [isOpen]="isOpen" (didDismiss)="onClose()" [backdropDismiss]="true">
+<ion-modal
+  [isOpen]="isOpen"
+  (didDismiss)="onClose()"
+  [backdropDismiss]="config.defaults.backdropDismiss"
+>
   <ng-template>
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>{{ title }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="onClose()">
-            <ion-icon name="close" slot="icon-only"></ion-icon>
+            <ion-icon [name]="config.icons.close" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>

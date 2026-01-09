@@ -8,9 +8,9 @@
     <ion-icon name="funnel-outline" slot="start"></ion-icon>
     <span>{{ filterLabel }}</span>
     @if (selectedCount > 0) {
-    <ion-badge color="primary" class="filter-badge">{{
-      selectedCount
-    }}</ion-badge>
+      <ion-badge color="primary" class="filter-badge">{{
+        selectedCount
+      }}</ion-badge>
     }
   </ion-button>
 </div>
@@ -44,33 +44,33 @@
 
       <div class="filter-content">
         @if (!hasCategories) {
-        <div class="empty-categories">
-          <ion-icon name="pricetags-outline"></ion-icon>
-          <p>{{ labels.noCategories }}</p>
-        </div>
+          <div class="empty-categories">
+            <ion-icon name="pricetags-outline"></ion-icon>
+            <p>{{ labels.noCategories }}</p>
+          </div>
         } @else if (!hasFilteredResults) {
-        <div class="empty-categories">
-          <ion-icon name="search-outline"></ion-icon>
-          <p>{{ labels.noResults }}</p>
-        </div>
+          <div class="empty-categories">
+            <ion-icon name="search-outline"></ion-icon>
+            <p>{{ labels.noResults }}</p>
+          </div>
         } @else {
-        <ion-list lines="none" class="category-list">
-          @for (category of filteredCategories; track category.id) {
-          <ion-item class="category-item">
-            <ion-checkbox
-              slot="start"
-              [checked]="isCategorySelected(category.id)"
-              (ionChange)="toggleCategory(category.id, $event)"
-            ></ion-checkbox>
-            <ion-icon
-              [name]="getCategoryIcon(category)"
-              [style.color]="category.color"
-              class="category-icon"
-            ></ion-icon>
-            <ion-label>{{ category.name }}</ion-label>
-          </ion-item>
-          }
-        </ion-list>
+          <ion-list lines="none" class="category-list">
+            @for (category of filteredCategories; track category.id) {
+              <ion-item class="category-item">
+                <ion-checkbox
+                  slot="start"
+                  [checked]="isCategorySelected(category.id)"
+                  (ionChange)="toggleCategory(category.id, $event)"
+                ></ion-checkbox>
+                <ion-icon
+                  [name]="getCategoryIcon(category)"
+                  [style.color]="category.color"
+                  class="category-icon"
+                ></ion-icon>
+                <ion-label>{{ category.name }}</ion-label>
+              </ion-item>
+            }
+          </ion-list>
         }
       </div>
     </ion-content>

@@ -5,11 +5,11 @@ ion-modal {
   --max-height: 90%;
   --border-radius: var(--app-border-radius-lg);
 
-  &[data-size="small"] {
+  &[data-size='small'] {
     --max-width: 400px;
   }
 
-  &[data-size="large"] {
+  &[data-size='large'] {
     --max-width: 700px;
   }
 }

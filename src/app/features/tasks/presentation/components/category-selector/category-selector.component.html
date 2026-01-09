@@ -1,15 +1,15 @@
 <div class="category-selector" (click)="openModal()">
   <div class="selector-content">
     @if (selectedCategory) {
-    <div class="selected-category">
-      <ion-icon
-        [name]="getCategoryIcon(selectedCategory)"
-        [style.color]="selectedCategory.color"
-      ></ion-icon>
-      <span>{{ selectedCategory.name }}</span>
-    </div>
+      <div class="selected-category">
+        <ion-icon
+          [name]="getCategoryIcon(selectedCategory)"
+          [style.color]="selectedCategory.color"
+        ></ion-icon>
+        <span>{{ selectedCategory.name }}</span>
+      </div>
     } @else {
-    <span class="placeholder">{{ labels.placeholder }}</span>
+      <span class="placeholder">{{ labels.placeholder }}</span>
     }
   </div>
   <ion-icon name="chevron-down" class="chevron"></ion-icon>
@@ -43,37 +43,41 @@
 
     <ion-content class="modal-content">
       @if (!hasCategories) {
-      <div class="empty-state">
-        <ion-icon name="pricetags-outline"></ion-icon>
-        <p>{{ labels.noCategories }}</p>
-      </div>
+        <div class="empty-state">
+          <ion-icon name="pricetags-outline"></ion-icon>
+          <p>{{ labels.noCategories }}</p>
+        </div>
       } @else if (!hasFilteredResults) {
-      <div class="empty-state">
-        <ion-icon name="search-outline"></ion-icon>
-        <p>{{ labels.noResults }}</p>
-      </div>
+        <div class="empty-state">
+          <ion-icon name="search-outline"></ion-icon>
+          <p>{{ labels.noResults }}</p>
+        </div>
       } @else {
-      <ion-list lines="none">
-        @for (category of filteredCategories; track category.id) {
-        <ion-item
-          button
-          (click)="selectCategory(category.id)"
-          [class.selected]="category.id === selectedCategoryId"
-          class="category-item"
-        >
-          <ion-icon
-            [name]="getCategoryIcon(category)"
-            [style.color]="category.color"
-            slot="start"
-            class="category-icon"
-          ></ion-icon>
-          <ion-label>{{ category.name }}</ion-label>
-          @if (category.id === selectedCategoryId) {
-          <ion-icon name="checkmark" slot="end" color="primary"></ion-icon>
+        <ion-list lines="none">
+          @for (category of filteredCategories; track category.id) {
+            <ion-item
+              button
+              (click)="selectCategory(category.id)"
+              [class.selected]="category.id === selectedCategoryId"
+              class="category-item"
+            >
+              <ion-icon
+                [name]="getCategoryIcon(category)"
+                [style.color]="category.color"
+                slot="start"
+                class="category-icon"
+              ></ion-icon>
+              <ion-label>{{ category.name }}</ion-label>
+              @if (category.id === selectedCategoryId) {
+                <ion-icon
+                  name="checkmark"
+                  slot="end"
+                  color="primary"
+                ></ion-icon>
+              }
+            </ion-item>
           }
-        </ion-item>
-        }
-      </ion-list>
+        </ion-list>
       }
     </ion-content>
   </ng-template>

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { ActionCardConfig } from './action-card.config';
 
 @Component({
   selector: 'app-action-card',
@@ -10,13 +11,15 @@ import { IonicModule } from '@ionic/angular';
   imports: [CommonModule, IonicModule],
 })
 export class ActionCardComponent {
-  @Input() icon: string = '';
+  @Input() icon: string = ActionCardConfig.defaults.icon;
   @Input() title: string = '';
   @Input() description: string = '';
-  @Input() color: string = 'primary';
+  @Input() color: string = ActionCardConfig.defaults.color;
   @Output() cardClick = new EventEmitter<void>();
 
-  onCardClick(): void {
+  public readonly config = ActionCardConfig;
+
+  public onCardClick(): void {
     this.cardClick.emit();
   }
 }
