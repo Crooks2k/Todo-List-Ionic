@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { HomePage } from './home.page';
-import { TranslateProvider } from '@shared/providers/translate.provider';
+import { TranslateProvider } from '@shared/utils/providers/translate.provider';
 
 describe('HomePage', () => {
   let component: HomePage;

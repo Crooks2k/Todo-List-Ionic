@@ -15,7 +15,8 @@ export const HomeConfig = Object.freeze({
     logo: 'assets/icon/favicon.png',
   },
   routes: {
-    tasks: '/tasks',
-    categories: '/categories',
+    tasks: '/tasks/list',
+    categories: '/tasks/categories',
+    releases: '/releases/list',
   },
 });

@@ -1,13 +1,49 @@
-h2 {
-  margin-top: 20px;
-  font-weight: 600;
+.home-content {
+  --background: var(--app-gradient-primary);
 }
 
-p {
-  color: var(--ion-color-medium);
-  margin-bottom: 30px;
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: var(--app-spacing-lg);
 }
 
-ion-button {
-  margin-top: 10px;
+.home-header {
+  text-align: center;
+  margin-bottom: var(--app-spacing-xl);
+  color: white;
+}
+
+.home-icon {
+  font-size: var(--app-font-size-hero);
+  color: white;
+  margin-bottom: var(--app-spacing-lg);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.home-title {
+  font-size: var(--app-font-size-xxxl);
+  font-weight: 700;
+  margin: 0 0 var(--app-spacing-xs) 0;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.home-subtitle {
+  font-size: var(--app-font-size-md);
+  opacity: 0.95;
+  margin: 0;
+  color: white;
+  font-weight: 400;
+}
+
+.home-actions {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }

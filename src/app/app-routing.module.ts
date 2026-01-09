@@ -14,6 +14,20 @@ const routes: Routes = [
         (m) => m.FeaturesHomeModule
       ),
   },
+  {
+    path: 'tasks',
+    loadChildren: () =>
+      import('./features/tasks/presentation/features-tasks.module').then(
+        (m) => m.FeaturesTasksModule
+      ),
+  },
+  {
+    path: 'releases',
+    loadChildren: () =>
+      import('./features/releases/presentation/features-releases.module').then(
+        (m) => m.FeaturesReleasesModule
+      ),
+  },
 ];
 
 @NgModule({

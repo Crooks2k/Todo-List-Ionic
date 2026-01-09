@@ -1,26 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> {{ view.title }} </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="home-content">
+  <div class="home-container">
+    <div class="home-header">
+      <ion-icon name="checkmark-circle" class="home-icon"></ion-icon>
+      <h1 class="home-title">{{ view.title }}</h1>
+      <p class="home-subtitle">{{ view.subtitle }}</p>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ view.title }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="home-actions">
+      <app-action-card
+        icon="checkbox-outline"
+        [title]="view.buttons?.viewTasks"
+        [description]="view.description"
+        color="primary"
+        (cardClick)="goToTasks()"
+      ></app-action-card>
 
-  <div class="ion-padding">
-    <h2>{{ view.subtitle }}</h2>
-    <p>{{ view.description }}</p>
+      <app-action-card
+        icon="pricetags-outline"
+        [title]="view.buttons?.manageCategories"
+        [description]="view.categoriesDescription"
+        color="success"
+        (cardClick)="goToCategories()"
+      ></app-action-card>
 
-    <ion-button expand="block" class="ion-margin-top">
-      {{ view.buttons?.addTask }}
-    </ion-button>
-
-    <ion-button expand="block" fill="outline">
-      {{ view.buttons?.viewTasks }}
-    </ion-button>
+      <app-action-card
+        icon="newspaper-outline"
+        [title]="view.buttons?.viewReleases"
+        [description]="view.releasesDescription"
+        color="warning"
+        (cardClick)="goToReleases()"
+      ></app-action-card>
+    </div>
   </div>
 </ion-content>

@@ -1,11 +1,14 @@
 {
   "home": {
-    "title": "Lista de Tareas",
-    "subtitle": "Bienvenido a tu gestor de tareas",
-    "description": "Aplicación de gestión de tareas con Ionic y Angular",
+    "title": "TaskFlow",
+    "subtitle": "Organiza tu día, alcanza tus metas",
+    "description": "Gestiona tus tareas de manera eficiente",
+    "categoriesDescription": "Organiza y prioriza por categorías",
+    "releasesDescription": "Novedades y actualizaciones",
     "buttons": {
-      "addTask": "Agregar Tarea",
-      "viewTasks": "Ver Tareas"
+      "viewTasks": "Mis Tareas",
+      "manageCategories": "Categorías",
+      "viewReleases": "Novedades"
     },
     "messages": {
       "noTasks": "No tienes tareas pendientes",
