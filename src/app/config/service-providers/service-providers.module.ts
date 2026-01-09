@@ -1,26 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { FeaturesTasksRoutingModule } from './features-tasks-routing.module';
 import { TaskRepository } from '@features/tasks/core/domain/repositories/task.repository';
 import { CategoryRepository } from '@features/tasks/core/domain/repositories/category.repository';
 import { TaskRepositoryImpl } from '@features/tasks/data/repositories/task.repository.impl';
 import { CategoryRepositoryImpl } from '@features/tasks/data/repositories/category.repository.impl';
+import { LocalStorageDataSource } from '@features/tasks/data/datasources/local-storage.datasource';
+import { TaskInteractor } from '@features/tasks/core/interactors/task.interactor';
+import { CategoryInteractor } from '@features/tasks/core/interactors/category.interactor';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule,
-    FeaturesTasksRoutingModule,
-  ],
-  declarations: [],
   providers: [
+    LocalStorageDataSource,
     { provide: TaskRepository, useClass: TaskRepositoryImpl },
     { provide: CategoryRepository, useClass: CategoryRepositoryImpl },
+    TaskInteractor,
+    CategoryInteractor,
   ],
 })
-export class FeaturesTasksModule {}
+export class ServiceProvidersModule {}

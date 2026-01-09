@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Category } from '@features/tasks/core/domain/entities/category.entity';
-import { GetCategoriesUseCase } from '@features/tasks/core/use-cases/categories/get-categories.use-case';
-import { DeleteCategoryUseCase } from '@features/tasks/core/use-cases/categories/delete-category.use-case';
+import { CategoryInteractor } from '@features/tasks/core/interactors/category.interactor';
 import { TranslateProvider } from '@shared/utils/providers/translate.provider';
 import { BasePage } from '@shared/utils/ui/base-page';
 import { CategoryManagerConfig } from './category-manager.config';
@@ -22,8 +21,7 @@ export class CategoryManagerPage extends BasePage implements OnInit {
   public readonly config = CategoryManagerConfig;
 
   constructor(
-    private getCategoriesUseCase: GetCategoriesUseCase,
-    private deleteCategoryUseCase: DeleteCategoryUseCase,
+    private categoryInteractor: CategoryInteractor,
     private translateProvider: TranslateProvider
   ) {
     super();
@@ -40,11 +38,11 @@ export class CategoryManagerPage extends BasePage implements OnInit {
   }
 
   private loadCategories(): void {
-    this.categories$ = this.getCategoriesUseCase.execute();
+    this.categories$ = this.categoryInteractor.getCategories();
   }
 
   onDeleteCategory(categoryId: string): void {
-    this.deleteCategoryUseCase.execute(categoryId).subscribe();
+    this.categoryInteractor.deleteCategory(categoryId).subscribe();
   }
 
   onAddCategory(): void {

@@ -1,0 +1,15 @@
+{
+  "taskList": {
+    "title": "Mis Tareas",
+    "allTasks": "Todas",
+    "emptyState": "No tienes tareas",
+    "emptyStateDescription": "Agrega tu primera tarea para comenzar",
+    "addButton": "Agregar Tarea"
+  },
+  "categoryManager": {
+    "title": "Categorías",
+    "emptyState": "No tienes categorías",
+    "emptyStateDescription": "Crea tu primera categoría para organizar tus tareas",
+    "addButton": "Agregar Categoría"
+  }
+}

@@ -5,10 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Task } from '@features/tasks/core/domain/entities/task.entity';
 import { Category } from '@features/tasks/core/domain/entities/category.entity';
-import { GetTasksUseCase } from '@features/tasks/core/use-cases/tasks/get-tasks.use-case';
-import { GetCategoriesUseCase } from '@features/tasks/core/use-cases/categories/get-categories.use-case';
-import { ToggleTaskUseCase } from '@features/tasks/core/use-cases/tasks/toggle-task.use-case';
-import { DeleteTaskUseCase } from '@features/tasks/core/use-cases/tasks/delete-task.use-case';
+import { TaskInteractor } from '@features/tasks/core/interactors/task.interactor';
+import { CategoryInteractor } from '@features/tasks/core/interactors/category.interactor';
 import { TranslateProvider } from '@shared/utils/providers/translate.provider';
 import { BasePage } from '@shared/utils/ui/base-page';
 import { TaskListConfig } from './task-list.config';
@@ -28,10 +26,8 @@ export class TaskListPage extends BasePage implements OnInit {
   public readonly config = TaskListConfig;
 
   constructor(
-    private getTasksUseCase: GetTasksUseCase,
-    private getCategoriesUseCase: GetCategoriesUseCase,
-    private toggleTaskUseCase: ToggleTaskUseCase,
-    private deleteTaskUseCase: DeleteTaskUseCase,
+    private taskInteractor: TaskInteractor,
+    private categoryInteractor: CategoryInteractor,
     private translateProvider: TranslateProvider
   ) {
     super();
@@ -49,19 +45,19 @@ export class TaskListPage extends BasePage implements OnInit {
   }
 
   private loadTasks(): void {
-    this.tasks$ = this.getTasksUseCase.execute();
+    this.tasks$ = this.taskInteractor.getTasks();
   }
 
   private loadCategories(): void {
-    this.categories$ = this.getCategoriesUseCase.execute();
+    this.categories$ = this.categoryInteractor.getCategories();
   }
 
   onToggleTask(taskId: string): void {
-    this.toggleTaskUseCase.execute(taskId).subscribe();
+    this.taskInteractor.toggleTaskCompleted(taskId).subscribe();
   }
 
   onDeleteTask(taskId: string): void {
-    this.deleteTaskUseCase.execute(taskId).subscribe();
+    this.taskInteractor.deleteTask(taskId).subscribe();
   }
 
   onFilterByCategory(categoryId: string | number | undefined | null): void {

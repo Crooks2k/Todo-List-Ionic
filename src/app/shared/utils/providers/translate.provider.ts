@@ -64,7 +64,6 @@ export class TranslateProvider {
       return key;
     }
 
-    // Interpolación de parámetros
     if (params) {
       Object.keys(params).forEach((param) => {
         translation = translation.replace(
