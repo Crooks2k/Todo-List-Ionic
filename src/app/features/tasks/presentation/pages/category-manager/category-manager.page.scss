@@ -15,10 +15,16 @@
   margin-bottom: var(--app-spacing-sm);
   box-shadow: var(--app-shadow-sm);
   border-radius: var(--app-border-radius-sm);
+  cursor: pointer;
 
   .category-icon {
     font-size: var(--app-icon-size-md);
     margin-right: var(--app-spacing-xs);
+  }
+
+  .chevron-icon {
+    font-size: 20px;
+    color: var(--app-text-disabled);
   }
 
   ion-label {
@@ -64,4 +70,8 @@ ion-fab-button {
   --background: var(--ion-color-primary);
   --background-activated: var(--ion-color-primary-shade);
   --box-shadow: var(--app-shadow-primary);
+}
+
+.modal-content {
+  --background: var(--app-background-white);
 }

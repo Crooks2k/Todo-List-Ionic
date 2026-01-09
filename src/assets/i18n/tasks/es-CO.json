@@ -1,15 +1,40 @@
 {
-  "taskList": {
-    "title": "Mis Tareas",
-    "allTasks": "Todas",
-    "emptyState": "No tienes tareas",
-    "emptyStateDescription": "Agrega tu primera tarea para comenzar",
-    "addButton": "Agregar Tarea"
+  "pages": {
+    "taskList": {
+      "title": "Mis Tareas",
+      "allTasks": "Todas",
+      "emptyState": "No tienes tareas",
+      "emptyStateDescription": "Agrega tu primera tarea para comenzar",
+      "addButton": "Agregar Tarea"
+    },
+    "categoryManager": {
+      "title": "Categorías",
+      "emptyState": "No tienes categorías",
+      "emptyStateDescription": "Crea tu primera categoría para organizar tus tareas",
+      "addButton": "Agregar Categoría"
+    }
   },
-  "categoryManager": {
-    "title": "Categorías",
-    "emptyState": "No tienes categorías",
-    "emptyStateDescription": "Crea tu primera categoría para organizar tus tareas",
-    "addButton": "Agregar Categoría"
+  "components": {
+    "categoryFilter": {
+      "allCategories": "Todas las categorías",
+      "filter": "Filtrar",
+      "categoriesCount": "categorías",
+      "modalTitle": "Filtrar por categorías",
+      "searchPlaceholder": "Buscar categorías...",
+      "noCategories": "No hay categorías creadas",
+      "noResults": "No se encontraron categorías",
+      "clearFilters": "Limpiar filtros",
+      "applyFilters": "Aplicar filtros"
+    },
+    "categoryForm": {
+      "name": "Nombre",
+      "namePlaceholder": "Ingresa el nombre de la categoría",
+      "nameError": "El nombre debe tener al menos 3 caracteres",
+      "color": "Selecciona un color",
+      "icon": "Selecciona un ícono",
+      "cancel": "Cancelar",
+      "create": "Crear categoría",
+      "update": "Guardar cambios"
+    }
   }
 }

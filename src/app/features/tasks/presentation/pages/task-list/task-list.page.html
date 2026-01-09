@@ -6,31 +6,16 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{ view.title }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="goToCategories()">
-        <ion-icon name="pricetags-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="content-wrapper">
-    <ion-segment
-      [(ngModel)]="selectedCategoryId"
-      (ionChange)="onFilterByCategory($event.detail.value)"
-      mode="md"
-      class="category-segment"
-    >
-      <ion-segment-button [value]="null">
-        <ion-label>{{ view.allTasks }}</ion-label>
-      </ion-segment-button>
-      @for (category of categories$ | async; track category.id) {
-      <ion-segment-button [value]="category.id">
-        <ion-label>{{ category.name }}</ion-label>
-      </ion-segment-button>
-      }
-    </ion-segment>
+    <app-category-filter
+      [categories]="(categories$ | async) || []"
+      [selectedCategoryIds]="selectedCategoryIds"
+      (filterChange)="onFilterChange($event)"
+    ></app-category-filter>
 
     <div class="tasks-container">
       @for (task of tasks$ | async; track task.id) {

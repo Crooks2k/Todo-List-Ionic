@@ -1,0 +1,71 @@
+<form [formGroup]="viewModel.form" class="category-form">
+  <div class="input-wrapper">
+    <ion-item lines="none" class="form-item">
+      <ion-label position="stacked">{{ labels.name }}</ion-label>
+      <ion-input
+        formControlName="name"
+        [placeholder]="labels.namePlaceholder"
+        type="text"
+      ></ion-input>
+    </ion-item>
+
+    @if (viewModel.form.get('name')?.invalid &&
+    viewModel.form.get('name')?.touched) {
+    <ion-text color="danger" class="error-text">
+      <small>{{ labels.nameError }}</small>
+    </ion-text>
+    }
+  </div>
+
+  <div class="form-section">
+    <ion-label class="section-label">{{ labels.color }}</ion-label>
+    <div class="color-palette">
+      @for (color of viewModel.colorPalette; track color) {
+      <div
+        class="color-circle"
+        [style.background]="color"
+        [class.selected]="viewModel.form.get('color')?.value === color"
+        (click)="selectColor(color)"
+      >
+        @if (viewModel.form.get('color')?.value === color) {
+        <ion-icon name="checkmark" class="check-icon"></ion-icon>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-section">
+    <ion-label class="section-label">{{ labels.icon }}</ion-label>
+    <div class="icon-grid">
+      @for (icon of viewModel.iconOptions; track icon) {
+      <div
+        class="icon-option"
+        [class.selected]="viewModel.form.get('icon')?.value === icon"
+        (click)="selectIcon(icon)"
+      >
+        <ion-icon [name]="icon"></ion-icon>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <ion-button
+      expand="block"
+      fill="outline"
+      color="medium"
+      (click)="onCancel()"
+    >
+      {{ labels.cancel }}
+    </ion-button>
+    <ion-button
+      expand="block"
+      color="primary"
+      (click)="onSave()"
+      [disabled]="!viewModel.isValid()"
+    >
+      {{ category ? labels.update : labels.create }}
+    </ion-button>
+  </div>
+</form>

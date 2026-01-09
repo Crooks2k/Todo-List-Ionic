@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { TaskRepository } from '@features/tasks/core/domain/repositories/task.repository';
 import {
   Task,
@@ -22,13 +22,15 @@ export class TaskRepositoryImpl extends TaskRepository {
   }
 
   getById(id: string): Observable<Task | null> {
-    return this.dataSource
-      .getTasks()
-      .pipe(map((tasks) => tasks.find((task) => task.id === id) || null));
+    return this.dataSource.getTasks().pipe(
+      take(1),
+      map((tasks) => tasks.find((task) => task.id === id) || null)
+    );
   }
 
   create(taskDto: CreateTaskDto): Observable<Task> {
     return this.dataSource.getTasks().pipe(
+      take(1),
       map((tasks) => {
         const newTask = TaskMapper.fromCreateDto(taskDto);
         const updatedTasks = [...tasks, newTask];
@@ -40,6 +42,7 @@ export class TaskRepositoryImpl extends TaskRepository {
 
   update(taskDto: UpdateTaskDto): Observable<Task> {
     return this.dataSource.getTasks().pipe(
+      take(1),
       map((tasks) => {
         const index = tasks.findIndex((task) => task.id === taskDto.id);
         if (index === -1) {
@@ -56,6 +59,7 @@ export class TaskRepositoryImpl extends TaskRepository {
 
   delete(id: string): Observable<void> {
     return this.dataSource.getTasks().pipe(
+      take(1),
       map((tasks) => {
         const updatedTasks = tasks.filter((task) => task.id !== id);
         this.dataSource.saveTasks(updatedTasks);
@@ -65,6 +69,7 @@ export class TaskRepositoryImpl extends TaskRepository {
 
   toggleCompleted(id: string): Observable<Task> {
     return this.dataSource.getTasks().pipe(
+      take(1),
       map((tasks) => {
         const index = tasks.findIndex((task) => task.id === id);
         if (index === -1) {
@@ -80,10 +85,9 @@ export class TaskRepositoryImpl extends TaskRepository {
   }
 
   getByCategory(categoryId: string): Observable<Task[]> {
-    return this.dataSource
-      .getTasks()
-      .pipe(
-        map((tasks) => tasks.filter((task) => task.categoryId === categoryId))
-      );
+    return this.dataSource.getTasks().pipe(
+      take(1),
+      map((tasks) => tasks.filter((task) => task.categoryId === categoryId))
+    );
   }
 }

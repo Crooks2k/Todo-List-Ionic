@@ -4,25 +4,6 @@
   padding-bottom: 80px;
 }
 
-.category-segment {
-  background: var(--app-background-white);
-  border-radius: var(--app-border-radius-sm);
-  box-shadow: var(--app-shadow-sm);
-
-  ion-segment-button {
-    --indicator-height: 3px;
-    min-height: 44px;
-    text-transform: none;
-    font-size: var(--app-font-size-sm);
-    font-weight: 500;
-
-    ion-label {
-      margin: 0;
-      padding: 0;
-    }
-  }
-}
-
 .tasks-container {
   padding: 0 var(--app-spacing-md);
 }

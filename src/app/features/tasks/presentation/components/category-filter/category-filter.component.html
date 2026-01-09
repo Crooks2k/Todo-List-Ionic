@@ -1,0 +1,97 @@
+<div class="filter-button-container">
+  <ion-button
+    expand="block"
+    fill="outline"
+    class="filter-button"
+    (click)="openFilterModal()"
+  >
+    <ion-icon name="funnel-outline" slot="start"></ion-icon>
+    <span>{{ filterLabel }}</span>
+    @if (selectedCount > 0) {
+    <ion-badge color="primary" class="filter-badge">{{
+      selectedCount
+    }}</ion-badge>
+    }
+  </ion-button>
+</div>
+
+<ion-modal
+  [isOpen]="showFilterModal"
+  (didDismiss)="closeFilterModal()"
+  [backdropDismiss]="true"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>{{ labels.modalTitle }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeFilterModal()">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content">
+      <div class="search-container">
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          [placeholder]="labels.searchPlaceholder"
+          [debounce]="300"
+          animated
+        ></ion-searchbar>
+      </div>
+
+      <div class="filter-content">
+        @if (categories.length === 0) {
+        <div class="empty-categories">
+          <ion-icon name="pricetags-outline"></ion-icon>
+          <p>{{ labels.noCategories }}</p>
+        </div>
+        } @else if (filteredCategories.length === 0) {
+        <div class="empty-categories">
+          <ion-icon name="search-outline"></ion-icon>
+          <p>{{ labels.noResults }}</p>
+        </div>
+        } @else {
+        <ion-list lines="none" class="category-list">
+          @for (category of filteredCategories; track category.id) {
+          <ion-item class="category-item">
+            <ion-checkbox
+              slot="start"
+              [checked]="isCategorySelected(category.id)"
+              (ionChange)="toggleCategory(category.id, $event)"
+            ></ion-checkbox>
+            <ion-icon
+              [name]="category.icon || 'pricetag'"
+              [style.color]="category.color"
+              class="category-icon"
+            ></ion-icon>
+            <ion-label>{{ category.name }}</ion-label>
+          </ion-item>
+          }
+        </ion-list>
+        }
+      </div>
+    </ion-content>
+
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="filter-actions-toolbar">
+        <div class="filter-actions">
+          <ion-button
+            expand="block"
+            fill="outline"
+            color="medium"
+            (click)="clearFilters()"
+            [disabled]="selectedCount === 0"
+          >
+            {{ labels.clearFilters }}
+          </ion-button>
+          <ion-button expand="block" color="primary" (click)="applyFilters()">
+            {{ labels.applyFilters }}
+          </ion-button>
+        </div>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

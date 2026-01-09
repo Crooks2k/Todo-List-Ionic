@@ -1,7 +1,7 @@
 export const CategoryManagerConfig = {
   i18n: {
     moduleKey: 'tasks',
-    page: 'categoryManager',
+    page: 'pages.categoryManager',
   },
   routes: {
     home: '/home',

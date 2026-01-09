@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { Task } from '@features/tasks/core/domain/entities/task.entity';
 import { Category } from '@features/tasks/core/domain/entities/category.entity';
 import { TaskInteractor } from '@features/tasks/core/interactors/task.interactor';
@@ -10,18 +9,19 @@ import { CategoryInteractor } from '@features/tasks/core/interactors/category.in
 import { TranslateProvider } from '@shared/utils/providers/translate.provider';
 import { BasePage } from '@shared/utils/ui/base-page';
 import { TaskListConfig } from './task-list.config';
+import { CategoryFilterComponent } from '../../components/category-filter';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.page.html',
   styleUrls: ['./task-list.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, FormsModule],
+  imports: [CommonModule, IonicModule, CategoryFilterComponent],
 })
 export class TaskListPage extends BasePage implements OnInit {
   tasks$!: Observable<Task[]>;
   categories$!: Observable<Category[]>;
-  selectedCategoryId: string | null = null;
+  selectedCategoryIds: string[] = [];
   public view: any = {};
   public readonly config = TaskListConfig;
 
@@ -35,8 +35,8 @@ export class TaskListPage extends BasePage implements OnInit {
 
   ngOnInit(): void {
     this.setupI18n();
-    this.loadTasks();
     this.loadCategories();
+    this.loadTasks();
   }
 
   private async setupI18n(): Promise<void> {
@@ -45,7 +45,19 @@ export class TaskListPage extends BasePage implements OnInit {
   }
 
   private loadTasks(): void {
-    this.tasks$ = this.taskInteractor.getTasks();
+    this.tasks$ = combineLatest([
+      this.taskInteractor.getTasks(),
+      this.categoryInteractor.getCategories(),
+    ]).pipe(
+      map(([tasks]) => {
+        if (this.selectedCategoryIds.length === 0) {
+          return tasks;
+        }
+        return tasks.filter((task) =>
+          this.selectedCategoryIds.includes(task.categoryId || '')
+        );
+      })
+    );
   }
 
   private loadCategories(): void {
@@ -60,9 +72,9 @@ export class TaskListPage extends BasePage implements OnInit {
     this.taskInteractor.deleteTask(taskId).subscribe();
   }
 
-  onFilterByCategory(categoryId: string | number | undefined | null): void {
-    this.selectedCategoryId =
-      typeof categoryId === 'string' ? categoryId : null;
+  onFilterChange(categoryIds: string[]): void {
+    this.selectedCategoryIds = categoryIds;
+    this.loadTasks();
   }
 
   onAddTask(): void {

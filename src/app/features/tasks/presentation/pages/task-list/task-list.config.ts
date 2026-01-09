@@ -1,7 +1,7 @@
 export const TaskListConfig = {
   i18n: {
     moduleKey: 'tasks',
-    page: 'taskList',
+    page: 'pages.taskList',
   },
   routes: {
     home: '/home',
