@@ -2,10 +2,16 @@
   "pages": {
     "taskList": {
       "title": "Mis Tareas",
-      "allTasks": "Todas",
+      "allTasks": "Activas",
+      "completedTasks": "Completadas",
+      "overdueTasks": "Vencidas",
       "emptyState": "No tienes tareas",
       "emptyStateDescription": "Agrega tu primera tarea para comenzar",
-      "addButton": "Agregar Tarea"
+      "emptyCompleted": "No hay tareas completadas",
+      "emptyOverdue": "No hay tareas vencidas",
+      "addButton": "Agregar Tarea",
+      "modalTitleCreate": "Nueva Tarea",
+      "modalTitleEdit": "Editar Tarea"
     },
     "categoryManager": {
       "title": "Categorías",
@@ -35,6 +41,41 @@
       "cancel": "Cancelar",
       "create": "Crear categoría",
       "update": "Guardar cambios"
+    },
+    "taskCard": {
+      "expand": "Expandir",
+      "collapse": "Contraer",
+      "complete": "Completar",
+      "uncomplete": "Desmarcar",
+      "progress": "Progreso",
+      "dueDate": "Vence",
+      "overdue": "Vencida",
+      "noCategory": "Sin categoría"
+    },
+    "taskForm": {
+      "title": "Título de la tarea",
+      "titlePlaceholder": "¿Qué necesitas hacer?",
+      "titleError": "El título debe tener al menos 3 caracteres",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Agrega detalles adicionales (opcional)",
+      "category": "Categoría",
+      "categoryPlaceholder": "Selecciona una categoría",
+      "dueDate": "Fecha límite",
+      "dueDatePlaceholder": "Selecciona una fecha",
+      "subTasks": "Subtareas",
+      "addSubTask": "Agregar subtarea",
+      "subTaskPlaceholder": "Describe la subtarea",
+      "cancel": "Cancelar",
+      "create": "Crear tarea",
+      "update": "Guardar cambios",
+      "noCategories": "No hay categorías"
+    },
+    "categorySelector": {
+      "placeholder": "Selecciona una categoría",
+      "modalTitle": "Seleccionar categoría",
+      "searchPlaceholder": "Buscar categoría...",
+      "noCategories": "No hay categorías disponibles",
+      "noResults": "No se encontraron categorías"
     }
   }
 }

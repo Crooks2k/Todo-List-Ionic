@@ -4,8 +4,54 @@
   padding-bottom: 80px;
 }
 
+.tabs-container {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  background: var(--app-background-white);
+  box-shadow: var(--app-shadow-sm);
+
+  ion-segment {
+    --background: var(--app-background-light);
+    border-radius: var(--app-border-radius-sm);
+    padding: 4px;
+
+    ion-segment-button {
+      --indicator-height: 0;
+      --indicator-box-shadow: none;
+      --indicator-color: transparent;
+      --color: var(--app-text-secondary);
+      --color-checked: white;
+      min-height: 36px;
+      text-transform: none;
+      font-size: var(--app-font-size-sm);
+      font-weight: 500;
+      border-radius: var(--app-border-radius-sm);
+      margin: 0 2px;
+      transition: all var(--app-transition-fast);
+      flex: 1;
+      min-width: 0;
+
+      &::part(native) {
+        border-radius: var(--app-border-radius-sm);
+        padding: 0 8px;
+      }
+
+      &.segment-button-checked {
+        background: var(--ion-color-primary);
+      }
+
+      ion-label {
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: clip;
+      }
+    }
+  }
+}
+
 .tasks-container {
-  padding: 0 var(--app-spacing-md);
+  padding: var(--app-spacing-md);
 }
 
 .task-item {
@@ -77,4 +123,14 @@ ion-fab-button {
   --background: var(--ion-color-primary);
   --background-activated: var(--ion-color-primary-shade);
   --box-shadow: var(--app-shadow-primary);
+}
+
+.modal-content {
+  --background: var(--app-background-white);
+  --overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::part(scroll) {
+    touch-action: pan-y;
+  }
 }

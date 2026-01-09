@@ -1,0 +1,97 @@
+<div
+  class="task-card"
+  [class.completed]="task.completed"
+  [class.overdue]="isOverdue"
+>
+  <div class="category-indicator" [style.background]="categoryColor"></div>
+
+  <div class="card-content">
+    <div class="card-header">
+      <div class="header-left">
+        <ion-checkbox
+          [checked]="task.completed"
+          (ionChange)="onToggleComplete()"
+          class="task-checkbox"
+        ></ion-checkbox>
+        <div class="task-info">
+          <h3 class="task-title" [class.completed]="task.completed">
+            {{ task.title }}
+          </h3>
+          @if (task.description) {
+          <p class="task-description">{{ task.description }}</p>
+          }
+        </div>
+      </div>
+
+      <div class="header-right">
+        @if (task.dueDate) {
+        <div class="due-date" [class.overdue]="isOverdue">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>{{ task.dueDate | date : "dd/MM" }}</span>
+        </div>
+        }
+        <ion-button
+          fill="clear"
+          size="small"
+          (click)="onEdit()"
+          class="edit-button"
+        >
+          <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="card-meta">
+      <div class="category-badge">
+        <ion-icon
+          [name]="categoryIcon"
+          [style.color]="categoryColor"
+        ></ion-icon>
+        <span>{{ categoryName }}</span>
+      </div>
+
+      @if (task.subTasks && task.subTasks.length > 0) {
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="progress"
+            [style.background]="categoryColor"
+          ></div>
+        </div>
+        <span class="progress-text">{{ progress }}%</span>
+      </div>
+      }
+    </div>
+
+    @if (task.subTasks && task.subTasks.length > 0) {
+    <div class="expand-section">
+      <ion-button
+        fill="clear"
+        size="small"
+        (click)="toggleExpand()"
+        class="expand-button"
+      >
+        <ion-icon
+          [name]="expanded ? 'chevron-up' : 'chevron-down'"
+          slot="start"
+        ></ion-icon>
+        {{ expanded ? labels.collapse : labels.expand }}
+      </ion-button>
+    </div>
+
+    @if (expanded) {
+    <div class="subtasks-container">
+      @for (subTask of task.subTasks; track subTask.id) {
+      <div class="subtask-item">
+        <ion-checkbox
+          [checked]="subTask.completed"
+          (ionChange)="onToggleSubTask(subTask)"
+        ></ion-checkbox>
+        <span [class.completed]="subTask.completed">{{ subTask.title }}</span>
+      </div>
+      }
+    </div>
+    } }
+  </div>
+</div>

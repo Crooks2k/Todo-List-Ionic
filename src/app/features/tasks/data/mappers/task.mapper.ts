@@ -12,6 +12,8 @@ export class TaskMapper {
       description: dto.description,
       completed: false,
       categoryId: dto.categoryId,
+      dueDate: dto.dueDate,
+      subTasks: dto.subTasks || [],
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -26,9 +28,14 @@ export class TaskMapper {
   }
 
   static toggleCompleted(task: Task): Task {
+    const newCompleted = !task.completed;
+
     return {
       ...task,
-      completed: !task.completed,
+      completed: newCompleted,
+      subTasks: newCompleted
+        ? task.subTasks.map((st) => ({ ...st, completed: true }))
+        : task.subTasks.map((st) => ({ ...st, completed: false })),
       updatedAt: new Date(),
     };
   }

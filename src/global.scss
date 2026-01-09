@@ -32,9 +32,120 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* Dark mode disabled - using light mode only */
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
 
 * {
   font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+ion-datetime {
+  --background: var(--app-background-white);
+  --background-rgb: 255, 255, 255;
+  --ion-color-primary: #667eea;
+  --ion-color-primary-rgb: 102, 126, 234;
+  --ion-color-primary-contrast: #ffffff;
+
+  border-radius: var(--app-border-radius-md);
+  box-shadow: none;
+
+  &::part(calendar-day) {
+    color: var(--app-text-primary) !important;
+    font-weight: 500;
+  }
+
+  &::part(calendar-day-today) {
+    color: var(--ion-color-primary) !important;
+    font-weight: 700;
+    border: 2px solid var(--ion-color-primary) !important;
+  }
+
+  &::part(calendar-day-active) {
+    background: var(--ion-color-primary) !important;
+    color: white !important;
+    font-weight: 600;
+  }
+
+  &::part(month-year-button) {
+    color: var(--app-text-primary) !important;
+    font-weight: 600;
+  }
+
+  &::part(wheel-item) {
+    color: var(--app-text-primary) !important;
+  }
+
+  &::part(wheel-item-active) {
+    color: var(--ion-color-primary) !important;
+    font-weight: 600;
+  }
+}
+
+ion-datetime-button {
+  --color: var(--app-text-primary);
+
+  &::part(native) {
+    background: var(--app-background-white) !important;
+    border: 2px solid var(--app-background-light) !important;
+    border-radius: var(--app-border-radius-sm) !important;
+    padding: var(--app-spacing-sm) var(--app-spacing-md) !important;
+    transition: all 0.2s ease;
+    color: var(--app-text-primary) !important;
+
+    &:hover {
+      border-color: var(--ion-color-primary) !important;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1) !important;
+    }
+  }
+
+  &::part(time-button),
+  &::part(date-button) {
+    color: var(--app-text-primary) !important;
+    background: transparent !important;
+  }
+}
+
+ion-modal.datetime-modal {
+  --background: var(--app-background-white);
+  --ion-background-color: var(--app-background-white);
+
+  ion-datetime {
+    --background: var(--app-background-white);
+  }
+
+  ion-button {
+    --color: var(--ion-color-primary);
+  }
+}
+
+ion-modal.category-selector-sheet {
+  --background: var(--app-background-white);
+  --ion-background-color: var(--app-background-white);
+
+  ion-header {
+    ion-toolbar {
+      --background: var(--app-background-white);
+      --color: var(--app-text-primary);
+    }
+  }
+
+  ion-content {
+    --background: var(--app-background-white);
+  }
+
+  ion-searchbar {
+    --background: var(--app-background-light);
+    --color: var(--app-text-primary);
+    --placeholder-color: var(--app-text-tertiary);
+    --icon-color: var(--app-text-secondary);
+  }
+}
+
+ion-modal {
+  ion-content {
+    --overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+  }
 }
