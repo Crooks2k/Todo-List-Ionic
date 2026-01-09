@@ -2,7 +2,7 @@ import {
   Category,
   CreateCategoryDto,
   UpdateCategoryDto,
-} from '../../core/domain/entities/category.entity';
+} from '@features/tasks/core/domain/entities/category.entity';
 
 export class CategoryMapper {
   static fromCreateDto(dto: CreateCategoryDto): Category {

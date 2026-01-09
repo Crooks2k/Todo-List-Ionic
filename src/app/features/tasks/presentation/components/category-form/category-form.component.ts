@@ -18,6 +18,7 @@ import {
 import { CategoryFormViewModel } from './view-model/category-form.view-model';
 import { CategoryFormConfig } from './category-form.config';
 import { TranslateProvider } from '@shared/utils/providers/translate.provider';
+import { isControlInvalid } from '@shared/utils/form';
 
 @Component({
   selector: 'app-category-form',
@@ -40,25 +41,30 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     private translateProvider: TranslateProvider
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.setupI18n();
     if (this.category) {
       this.viewModel.loadCategory(this.category);
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['category'] && this.category) {
       this.viewModel.loadCategory(this.category);
     }
   }
 
-  private async setupI18n(): Promise<void> {
-    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
-    this.labels = this.translateProvider.getObject(this.config.i18n.view);
+  public get isEditMode(): boolean {
+    return !!this.category;
   }
 
-  onSave(): void {
+  public isNameInvalid(): boolean {
+    return isControlInvalid(
+      this.viewModel.form.get(this.config.formFields.name)
+    );
+  }
+
+  public onSave(): void {
     if (this.viewModel.isValid()) {
       const formValue = this.viewModel.getFormValue();
       if (this.category) {
@@ -72,15 +78,22 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     }
   }
 
-  onCancel(): void {
+  public onCancel(): void {
     this.cancelled.emit();
   }
 
-  selectColor(color: string): void {
-    this.viewModel.form.patchValue({ color });
+  public selectColor(color: string): void {
+    this.viewModel.form.patchValue({
+      [this.config.formFields.color]: color,
+    });
   }
 
-  selectIcon(icon: string): void {
-    this.viewModel.form.patchValue({ icon });
+  public selectIcon(icon: string): void {
+    this.viewModel.form.patchValue({ [this.config.formFields.icon]: icon });
+  }
+
+  private async setupI18n(): Promise<void> {
+    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
+    this.labels = this.translateProvider.getObject(this.config.i18n.view);
   }
 }

@@ -6,6 +6,7 @@ import {
   UpdateTaskDto,
   SubTask,
 } from '@features/tasks/core/domain/entities/task.entity';
+import { TaskFormConfig } from '../task-form.config';
 
 @Injectable()
 export class TaskFormViewModel {
@@ -13,24 +14,32 @@ export class TaskFormViewModel {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      description: [''],
-      categoryId: [''],
-      dueDate: [null],
-      subTasks: this.fb.array([]),
+      [TaskFormConfig.formFields.title]: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(TaskFormConfig.validation.titleMinLength),
+        ],
+      ],
+      [TaskFormConfig.formFields.description]: [''],
+      [TaskFormConfig.formFields.categoryId]: [''],
+      [TaskFormConfig.formFields.dueDate]: [null],
+      [TaskFormConfig.formFields.subTasks]: this.fb.array([]),
     });
   }
 
   get subTasksArray(): FormArray {
-    return this.form.get('subTasks') as FormArray;
+    return this.form.get(TaskFormConfig.formFields.subTasks) as FormArray;
   }
 
   loadTask(task: Task): void {
     this.form.patchValue({
-      title: task.title,
-      description: task.description,
-      categoryId: task.categoryId,
-      dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
+      [TaskFormConfig.formFields.title]: task.title,
+      [TaskFormConfig.formFields.description]: task.description,
+      [TaskFormConfig.formFields.categoryId]: task.categoryId,
+      [TaskFormConfig.formFields.dueDate]: task.dueDate
+        ? new Date(task.dueDate).toISOString()
+        : null,
     });
 
     this.subTasksArray.clear();
@@ -58,8 +67,14 @@ export class TaskFormViewModel {
     const value = this.form.value;
     return {
       ...value,
-      dueDate: value.dueDate ? new Date(value.dueDate) : undefined,
-      subTasks: value.subTasks.filter((st: SubTask) => st.title.trim() !== ''),
+      [TaskFormConfig.formFields.dueDate]: value[
+        TaskFormConfig.formFields.dueDate
+      ]
+        ? new Date(value[TaskFormConfig.formFields.dueDate])
+        : undefined,
+      [TaskFormConfig.formFields.subTasks]: value[
+        TaskFormConfig.formFields.subTasks
+      ].filter((st: SubTask) => st.title.trim() !== ''),
     };
   }
 
@@ -69,10 +84,10 @@ export class TaskFormViewModel {
 
   reset(): void {
     this.form.reset({
-      title: '',
-      description: '',
-      categoryId: '',
-      dueDate: null,
+      [TaskFormConfig.formFields.title]: '',
+      [TaskFormConfig.formFields.description]: '',
+      [TaskFormConfig.formFields.categoryId]: '',
+      [TaskFormConfig.formFields.dueDate]: null,
     });
     this.subTasksArray.clear();
   }

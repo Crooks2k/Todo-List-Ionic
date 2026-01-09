@@ -43,9 +43,9 @@
 ion-datetime {
   --background: var(--app-background-white);
   --background-rgb: 255, 255, 255;
-  --ion-color-primary: #667eea;
+  --ion-color-primary: var(--ion-color-primary);
   --ion-color-primary-rgb: 102, 126, 234;
-  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast: var(--app-white);
 
   border-radius: var(--app-border-radius-md);
   box-shadow: none;
@@ -63,7 +63,7 @@ ion-datetime {
 
   &::part(calendar-day-active) {
     background: var(--ion-color-primary) !important;
-    color: white !important;
+    color: var(--app-white) !important;
     font-weight: 600;
   }
 
@@ -95,7 +95,7 @@ ion-datetime-button {
 
     &:hover {
       border-color: var(--ion-color-primary) !important;
-      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1) !important;
+      box-shadow: 0 0 0 4px var(--app-primary-overlay) !important;
     }
   }
 

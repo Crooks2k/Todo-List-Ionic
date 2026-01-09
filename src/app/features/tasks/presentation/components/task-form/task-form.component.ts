@@ -19,7 +19,8 @@ import { Category } from '@features/tasks/core/domain/entities/category.entity';
 import { TaskFormViewModel } from './view-model/task-form.view-model';
 import { TaskFormConfig } from './task-form.config';
 import { TranslateProvider } from '@shared/utils/providers/translate.provider';
-import { CategorySelectorComponent } from '../category-selector';
+import { CategorySelectorComponent } from '@features/tasks/presentation/components/category-selector';
+import { isControlInvalid } from '@shared/utils/form';
 
 @Component({
   selector: 'app-task-form',
@@ -48,25 +49,30 @@ export class TaskFormComponent implements OnInit, OnChanges {
     private translateProvider: TranslateProvider
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.setupI18n();
     if (this.task) {
       this.viewModel.loadTask(this.task);
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['task'] && this.task) {
       this.viewModel.loadTask(this.task);
     }
   }
 
-  private async setupI18n(): Promise<void> {
-    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
-    this.labels = this.translateProvider.getObject(this.config.i18n.component);
+  public get isEditMode(): boolean {
+    return !!this.task;
   }
 
-  onSave(): void {
+  public isTitleInvalid(): boolean {
+    return isControlInvalid(
+      this.viewModel.form.get(this.config.formFields.title)
+    );
+  }
+
+  public onSave(): void {
     if (this.viewModel.isValid()) {
       const formValue = this.viewModel.getFormValue();
       if (this.task) {
@@ -80,23 +86,26 @@ export class TaskFormComponent implements OnInit, OnChanges {
     }
   }
 
-  onCancel(): void {
+  public onCancel(): void {
     this.cancelled.emit();
   }
 
-  onAddSubTask(): void {
+  public onAddSubTask(): void {
     this.viewModel.addSubTask();
   }
 
-  onRemoveSubTask(index: number): void {
+  public onRemoveSubTask(index: number): void {
     this.viewModel.removeSubTask(index);
   }
 
-  onCategorySelected(categoryId: string): void {
-    this.viewModel.form.patchValue({ categoryId });
+  public onCategorySelected(categoryId: string): void {
+    this.viewModel.form.patchValue({
+      [this.config.formFields.categoryId]: categoryId,
+    });
   }
 
-  getCategoryById(categoryId: string): Category | undefined {
-    return this.categories.find((c) => c.id === categoryId);
+  private async setupI18n(): Promise<void> {
+    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
+    this.labels = this.translateProvider.getObject(this.config.i18n.component);
   }
 }

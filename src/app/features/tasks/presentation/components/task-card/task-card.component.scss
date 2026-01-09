@@ -55,7 +55,7 @@
   --checkbox-background-checked: var(--ion-color-primary);
   --border-color: var(--ion-color-primary);
   --border-color-checked: var(--ion-color-primary);
-  --checkmark-color: white;
+  --checkmark-color: var(--app-white);
   margin-top: 2px;
   flex-shrink: 0;
 }
@@ -102,7 +102,7 @@
   }
 
   &.overdue {
-    background: rgba(235, 68, 90, 0.1);
+    background: var(--app-danger-overlay);
     color: var(--ion-color-danger);
   }
 }
@@ -203,7 +203,7 @@
   border: 1px solid var(--app-background-light);
   border-radius: var(--app-border-radius-md);
   animation: slideDown 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 4px var(--app-overlay-light);
 }
 
 .subtask-item {
@@ -230,7 +230,7 @@
     --checkbox-background-checked: var(--ion-color-primary);
     --border-color: var(--ion-color-primary);
     --border-color-checked: var(--ion-color-primary);
-    --checkmark-color: white;
+    --checkmark-color: var(--app-white);
     --border-width: 2px;
     flex-shrink: 0;
   }

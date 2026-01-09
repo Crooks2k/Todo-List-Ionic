@@ -7,7 +7,7 @@ import {
   UpdateTaskDto,
 } from '@features/tasks/core/domain/entities/task.entity';
 import { LocalStorageDataSource } from '@features/tasks/data/datasources/local-storage.datasource';
-import { TaskMapper } from '../mappers/task.mapper';
+import { TaskMapper } from '@features/tasks/data/mappers/task.mapper';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,7 @@ import {
   Task,
   CreateTaskDto,
   UpdateTaskDto,
-} from '../../core/domain/entities/task.entity';
+} from '@features/tasks/core/domain/entities/task.entity';
 
 export class TaskMapper {
   static fromCreateDto(dto: CreateTaskDto): Task {

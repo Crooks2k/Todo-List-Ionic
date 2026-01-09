@@ -7,7 +7,7 @@ import {
   UpdateCategoryDto,
 } from '@features/tasks/core/domain/entities/category.entity';
 import { LocalStorageDataSource } from '@features/tasks/data/datasources/local-storage.datasource';
-import { CategoryMapper } from '../mappers/category.mapper';
+import { CategoryMapper } from '@features/tasks/data/mappers/category.mapper';
 
 @Injectable({
   providedIn: 'root',

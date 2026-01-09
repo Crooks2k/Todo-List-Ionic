@@ -60,7 +60,7 @@
     &:focus-within {
       --background: var(--app-background-white);
       border-color: var(--ion-color-primary);
-      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      box-shadow: 0 0 0 4px var(--app-primary-overlay);
     }
   }
 
@@ -110,12 +110,12 @@
   align-items: center;
   justify-content: center;
   border: 3px solid transparent;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--app-overlay-medium);
 
   &.selected {
     border: 1.3px solid var(--app-text-primary);
     transform: scale(1.15);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--app-overlay-darker);
   }
 
   &:active {
@@ -123,9 +123,9 @@
   }
 
   .check-icon {
-    color: white;
+    color: var(--app-white);
     font-size: 20px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 2px 4px var(--app-overlay-darkest));
   }
 }
 
@@ -160,7 +160,7 @@
     transform: scale(1.1);
 
     ion-icon {
-      color: white;
+      color: var(--app-white);
     }
   }
 

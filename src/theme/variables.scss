@@ -93,10 +93,24 @@
   --app-background-light: #f5f5f5;
   --app-background-white: #ffffff;
 
+  --app-border-light: #e0e0e0;
+  --app-border-medium: #cccccc;
+
   --app-text-primary: #1a1a1a;
   --app-text-secondary: #666666;
   --app-text-tertiary: #999999;
   --app-text-disabled: #cccccc;
+
+  --app-overlay-light: rgba(0, 0, 0, 0.04);
+  --app-overlay-medium: rgba(0, 0, 0, 0.08);
+  --app-overlay-dark: rgba(0, 0, 0, 0.1);
+  --app-overlay-darker: rgba(0, 0, 0, 0.2);
+  --app-overlay-darkest: rgba(0, 0, 0, 0.4);
+
+  --app-primary-overlay: rgba(102, 126, 234, 0.1);
+  --app-danger-overlay: rgba(235, 68, 90, 0.1);
+
+  --app-white: #ffffff;
 
   --app-border-radius-sm: 12px;
   --app-border-radius-md: 14px;

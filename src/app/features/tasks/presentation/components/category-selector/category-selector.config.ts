@@ -1,3 +1,5 @@
+import { TaskConstants } from '@features/tasks/core/constants';
+
 export const CategorySelectorConfig = {
   i18n: {
     moduleKey: 'tasks',
@@ -5,5 +7,11 @@ export const CategorySelectorConfig = {
   },
   modal: {
     cssClass: 'category-selector-sheet',
+  },
+  search: {
+    debounce: TaskConstants.debounce.searchDelay,
+  },
+  defaults: {
+    icon: TaskConstants.defaults.categoryIcon,
   },
 } as const;

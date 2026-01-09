@@ -4,13 +4,13 @@ import {
   Task,
   CreateTaskDto,
   UpdateTaskDto,
-} from '../domain/entities/task.entity';
-import { GetTasksUseCase } from '../use-cases/tasks/get-tasks.use-case';
-import { CreateTaskUseCase } from '../use-cases/tasks/create-task.use-case';
-import { UpdateTaskUseCase } from '../use-cases/tasks/update-task.use-case';
-import { DeleteTaskUseCase } from '../use-cases/tasks/delete-task.use-case';
-import { ToggleTaskUseCase } from '../use-cases/tasks/toggle-task.use-case';
-import { GetTasksByCategoryUseCase } from '../use-cases/tasks/get-tasks-by-category.use-case';
+} from '@features/tasks/core/domain/entities/task.entity';
+import { GetTasksUseCase } from '@features/tasks/core/use-cases/tasks/get-tasks.use-case';
+import { CreateTaskUseCase } from '@features/tasks/core/use-cases/tasks/create-task.use-case';
+import { UpdateTaskUseCase } from '@features/tasks/core/use-cases/tasks/update-task.use-case';
+import { DeleteTaskUseCase } from '@features/tasks/core/use-cases/tasks/delete-task.use-case';
+import { ToggleTaskUseCase } from '@features/tasks/core/use-cases/tasks/toggle-task.use-case';
+import { GetTasksByCategoryUseCase } from '@features/tasks/core/use-cases/tasks/get-tasks-by-category.use-case';
 
 @Injectable()
 export class TaskInteractor {

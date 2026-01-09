@@ -20,25 +20,20 @@ export class CategorySelectorComponent implements OnInit {
 
   public readonly config = CategorySelectorConfig;
   public labels: any = {};
-  showModal = false;
-  searchTerm = '';
+  public showModal = false;
+  public searchTerm = '';
 
   constructor(private translateProvider: TranslateProvider) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.setupI18n();
+  public ngOnInit(): void {
+    this.setupI18n();
   }
 
-  private async setupI18n(): Promise<void> {
-    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
-    this.labels = this.translateProvider.getObject(this.config.i18n.component);
-  }
-
-  get selectedCategory(): Category | undefined {
+  public get selectedCategory(): Category | undefined {
     return this.categories.find((c) => c.id === this.selectedCategoryId);
   }
 
-  get filteredCategories(): Category[] {
+  public get filteredCategories(): Category[] {
     if (!this.searchTerm.trim()) {
       return this.categories;
     }
@@ -48,18 +43,35 @@ export class CategorySelectorComponent implements OnInit {
     );
   }
 
-  openModal(): void {
+  public get hasCategories(): boolean {
+    return this.categories.length > 0;
+  }
+
+  public get hasFilteredResults(): boolean {
+    return this.filteredCategories.length > 0;
+  }
+
+  public openModal(): void {
     this.showModal = true;
     this.searchTerm = '';
   }
 
-  closeModal(): void {
+  public closeModal(): void {
     this.showModal = false;
     this.searchTerm = '';
   }
 
-  selectCategory(categoryId: string): void {
+  public selectCategory(categoryId: string): void {
     this.categorySelected.emit(categoryId);
     this.closeModal();
+  }
+
+  public getCategoryIcon(category: Category): string {
+    return category.icon || this.config.defaults.icon;
+  }
+
+  private async setupI18n(): Promise<void> {
+    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
+    this.labels = this.translateProvider.getObject(this.config.i18n.component);
   }
 }

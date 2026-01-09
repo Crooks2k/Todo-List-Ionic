@@ -4,11 +4,11 @@ import {
   Category,
   CreateCategoryDto,
   UpdateCategoryDto,
-} from '../domain/entities/category.entity';
-import { GetCategoriesUseCase } from '../use-cases/categories/get-categories.use-case';
-import { CreateCategoryUseCase } from '../use-cases/categories/create-category.use-case';
-import { UpdateCategoryUseCase } from '../use-cases/categories/update-category.use-case';
-import { DeleteCategoryUseCase } from '../use-cases/categories/delete-category.use-case';
+} from '@features/tasks/core/domain/entities/category.entity';
+import { GetCategoriesUseCase } from '@features/tasks/core/use-cases/categories/get-categories.use-case';
+import { CreateCategoryUseCase } from '@features/tasks/core/use-cases/categories/create-category.use-case';
+import { UpdateCategoryUseCase } from '@features/tasks/core/use-cases/categories/update-category.use-case';
+import { DeleteCategoryUseCase } from '@features/tasks/core/use-cases/categories/delete-category.use-case';
 
 @Injectable()
 export class CategoryInteractor {

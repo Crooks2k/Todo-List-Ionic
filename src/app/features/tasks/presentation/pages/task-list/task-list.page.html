@@ -75,9 +75,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>
-          {{ selectedTask ? view.modalTitleEdit : view.modalTitleCreate }}
-        </ion-title>
+        <ion-title> {{ modalTitle }} </ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="closeTaskModal()">
             <ion-icon name="close" slot="icon-only"></ion-icon>

@@ -11,6 +11,7 @@ import {
   DEFAULT_CATEGORY_COLOR,
   DEFAULT_CATEGORY_ICON,
 } from '@features/tasks/core/constants';
+import { CategoryFormConfig } from '../category-form.config';
 
 @Injectable()
 export class CategoryFormViewModel {
@@ -21,17 +22,26 @@ export class CategoryFormViewModel {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      color: [DEFAULT_CATEGORY_COLOR, Validators.required],
-      icon: [DEFAULT_CATEGORY_ICON],
+      [CategoryFormConfig.formFields.name]: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(CategoryFormConfig.validation.nameMinLength),
+        ],
+      ],
+      [CategoryFormConfig.formFields.color]: [
+        DEFAULT_CATEGORY_COLOR,
+        Validators.required,
+      ],
+      [CategoryFormConfig.formFields.icon]: [DEFAULT_CATEGORY_ICON],
     });
   }
 
   loadCategory(category: Category): void {
     this.form.patchValue({
-      name: category.name,
-      color: category.color,
-      icon: category.icon,
+      [CategoryFormConfig.formFields.name]: category.name,
+      [CategoryFormConfig.formFields.color]: category.color,
+      [CategoryFormConfig.formFields.icon]: category.icon,
     });
   }
 
@@ -45,9 +55,9 @@ export class CategoryFormViewModel {
 
   reset(): void {
     this.form.reset({
-      name: '',
-      color: DEFAULT_CATEGORY_COLOR,
-      icon: DEFAULT_CATEGORY_ICON,
+      [CategoryFormConfig.formFields.name]: '',
+      [CategoryFormConfig.formFields.color]: DEFAULT_CATEGORY_COLOR,
+      [CategoryFormConfig.formFields.icon]: DEFAULT_CATEGORY_ICON,
     });
   }
 }

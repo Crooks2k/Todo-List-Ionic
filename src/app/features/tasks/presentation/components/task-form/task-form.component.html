@@ -9,8 +9,7 @@
       ></ion-input>
     </ion-item>
 
-    @if (viewModel.form.get('title')?.invalid &&
-    viewModel.form.get('title')?.touched) {
+    @if (isTitleInvalid()) {
     <ion-text color="danger" class="error-text">
       <small>{{ labels.titleError }}</small>
     </ion-text>
@@ -52,7 +51,7 @@
           [showDefaultButtons]="true"
           doneText="Confirmar"
           cancelText="Cancelar"
-          locale="es-ES"
+          [locale]="config.datetime.locale"
         ></ion-datetime>
       </ng-template>
     </ion-modal>
@@ -111,7 +110,7 @@
       (click)="onSave()"
       [disabled]="!viewModel.isValid()"
     >
-      {{ task ? labels.update : labels.create }}
+      {{ isEditMode ? labels.update : labels.create }}
     </ion-button>
   </div>
 </form>

@@ -37,18 +37,18 @@
         <ion-searchbar
           [(ngModel)]="searchTerm"
           [placeholder]="labels.searchPlaceholder"
-          [debounce]="300"
+          [debounce]="config.search.debounce"
           animated
         ></ion-searchbar>
       </div>
 
       <div class="filter-content">
-        @if (categories.length === 0) {
+        @if (!hasCategories) {
         <div class="empty-categories">
           <ion-icon name="pricetags-outline"></ion-icon>
           <p>{{ labels.noCategories }}</p>
         </div>
-        } @else if (filteredCategories.length === 0) {
+        } @else if (!hasFilteredResults) {
         <div class="empty-categories">
           <ion-icon name="search-outline"></ion-icon>
           <p>{{ labels.noResults }}</p>
@@ -63,7 +63,7 @@
               (ionChange)="toggleCategory(category.id, $event)"
             ></ion-checkbox>
             <ion-icon
-              [name]="category.icon || 'pricetag'"
+              [name]="getCategoryIcon(category)"
               [style.color]="category.color"
               class="category-icon"
             ></ion-icon>
@@ -83,7 +83,7 @@
             fill="outline"
             color="medium"
             (click)="clearFilters()"
-            [disabled]="selectedCount === 0"
+            [disabled]="!hasSelectedFilters"
           >
             {{ labels.clearFilters }}
           </ion-button>

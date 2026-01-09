@@ -7,11 +7,11 @@ import {
   CreateCategoryDto,
   UpdateCategoryDto,
 } from '@features/tasks/core/domain/entities/category.entity';
-import { CategoryInteractor } from '@features/tasks/core/interactors/category.interactor';
 import { TranslateProvider } from '@shared/utils/providers/translate.provider';
 import { BasePage } from '@shared/utils/ui/base-page';
 import { CategoryManagerConfig } from './category-manager.config';
-import { CategoryFormComponent } from '../../components/category-form';
+import { CategoryFormComponent } from '@features/tasks/presentation/components/category-form';
+import { CategoryManagementService } from '@features/tasks/presentation/services';
 
 @Component({
   selector: 'app-category-manager',
@@ -19,25 +19,72 @@ import { CategoryFormComponent } from '../../components/category-form';
   styleUrls: ['./category-manager.page.scss'],
   standalone: true,
   imports: [CommonModule, IonicModule, CategoryFormComponent],
+  providers: [CategoryManagementService],
 })
 export class CategoryManagerPage extends BasePage implements OnInit {
-  categories$!: Observable<Category[]>;
+  public categories$!: Observable<Category[]>;
   public view: any = {};
   public readonly config = CategoryManagerConfig;
-
-  showModal = false;
-  selectedCategory?: Category;
+  public showModal = false;
+  public selectedCategory?: Category;
 
   constructor(
-    private categoryInteractor: CategoryInteractor,
+    private categoryManagementService: CategoryManagementService,
     private translateProvider: TranslateProvider
   ) {
     super();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.setupI18n();
     this.loadCategories();
+  }
+
+  public get modalTitle(): string {
+    return this.selectedCategory
+      ? this.view.modalTitleEdit
+      : this.view.modalTitleCreate;
+  }
+
+  public onAddCategory(): void {
+    this.selectedCategory = undefined;
+    this.showModal = true;
+  }
+
+  public onEditCategory(category: Category): void {
+    this.selectedCategory = category;
+    this.showModal = true;
+  }
+
+  public onSaveCategory(
+    categoryDto: CreateCategoryDto | UpdateCategoryDto
+  ): void {
+    if (this.categoryManagementService.isUpdateDto(categoryDto)) {
+      this.categoryManagementService
+        .updateCategory(categoryDto)
+        .subscribe(() => {
+          this.closeModal();
+        });
+    } else {
+      this.categoryManagementService
+        .createCategory(categoryDto)
+        .subscribe(() => {
+          this.closeModal();
+        });
+    }
+  }
+
+  public onDeleteCategory(categoryId: string): void {
+    this.categoryManagementService.deleteCategory(categoryId).subscribe();
+  }
+
+  public closeModal(): void {
+    this.showModal = false;
+    this.selectedCategory = undefined;
+  }
+
+  public goBackToHome(): void {
+    this.navigate(this.config.routes.home);
   }
 
   private async setupI18n(): Promise<void> {
@@ -46,49 +93,6 @@ export class CategoryManagerPage extends BasePage implements OnInit {
   }
 
   private loadCategories(): void {
-    this.categories$ = this.categoryInteractor.getCategories();
-  }
-
-  onAddCategory(): void {
-    this.selectedCategory = undefined;
-    this.showModal = true;
-  }
-
-  onEditCategory(category: Category): void {
-    this.selectedCategory = category;
-    this.showModal = true;
-  }
-
-  onSaveCategory(categoryDto: CreateCategoryDto | UpdateCategoryDto): void {
-    if ('id' in categoryDto) {
-      this.categoryInteractor
-        .updateCategory(categoryDto as UpdateCategoryDto)
-        .subscribe(() => {
-          this.closeModal();
-          this.loadCategories();
-        });
-    } else {
-      this.categoryInteractor
-        .createCategory(categoryDto as CreateCategoryDto)
-        .subscribe(() => {
-          this.closeModal();
-          this.loadCategories();
-        });
-    }
-  }
-
-  onDeleteCategory(categoryId: string): void {
-    this.categoryInteractor.deleteCategory(categoryId).subscribe(() => {
-      this.loadCategories();
-    });
-  }
-
-  closeModal(): void {
-    this.showModal = false;
-    this.selectedCategory = undefined;
-  }
-
-  goBackToHome(): void {
-    this.navigate(this.config.routes.home);
+    this.categories$ = this.categoryManagementService.getCategories();
   }
 }

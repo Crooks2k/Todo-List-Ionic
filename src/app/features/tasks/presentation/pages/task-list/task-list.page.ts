@@ -2,23 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { Observable, combineLatest, map, take } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import {
   Task,
   CreateTaskDto,
   UpdateTaskDto,
 } from '@features/tasks/core/domain/entities/task.entity';
 import { Category } from '@features/tasks/core/domain/entities/category.entity';
-import { TaskInteractor } from '@features/tasks/core/interactors/task.interactor';
-import { CategoryInteractor } from '@features/tasks/core/interactors/category.interactor';
 import { TranslateProvider } from '@shared/utils/providers/translate.provider';
 import { BasePage } from '@shared/utils/ui/base-page';
 import { TaskListConfig } from './task-list.config';
-import { CategoryFilterComponent } from '../../components/category-filter';
-import { TaskCardComponent } from '../../components/task-card';
-import { TaskFormComponent } from '../../components/task-form';
-
-type TaskTab = 'all' | 'completed' | 'overdue';
+import { CategoryFilterComponent } from '@features/tasks/presentation/components/category-filter';
+import { TaskCardComponent } from '@features/tasks/presentation/components/task-card';
+import { TaskFormComponent } from '@features/tasks/presentation/components/task-form';
+import {
+  TaskFilterService,
+  TaskManagementService,
+  CategoryManagementService,
+} from '@features/tasks/presentation/services';
+import { TaskTab } from './task-list.config';
 
 @Component({
   selector: 'app-task-list',
@@ -33,31 +35,114 @@ type TaskTab = 'all' | 'completed' | 'overdue';
     TaskCardComponent,
     TaskFormComponent,
   ],
+  providers: [
+    TaskFilterService,
+    TaskManagementService,
+    CategoryManagementService,
+  ],
 })
 export class TaskListPage extends BasePage implements OnInit {
-  tasks$!: Observable<Task[]>;
-  categories$!: Observable<Category[]>;
-  categoriesMap: Map<string, Category> = new Map();
-  selectedCategoryIds: string[] = [];
-  selectedTab: TaskTab = 'all';
-  public view: any = {};
   public readonly config = TaskListConfig;
+  public tasks$!: Observable<Task[]>;
+  public categories$!: Observable<Category[]>;
+  public selectedCategoryIds: string[] = [];
+  public selectedTab: TaskTab = this.config.tabs.all;
+  public view: any = {};
+  public showTaskModal = false;
+  public selectedTask?: Task;
 
-  showTaskModal = false;
-  selectedTask?: Task;
+  private categoriesMap: Map<string, Category> = new Map();
 
   constructor(
-    private taskInteractor: TaskInteractor,
-    private categoryInteractor: CategoryInteractor,
+    private taskFilterService: TaskFilterService,
+    private taskManagementService: TaskManagementService,
+    private categoryManagementService: CategoryManagementService,
     private translateProvider: TranslateProvider
   ) {
     super();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.setupI18n();
     this.loadCategories();
     this.loadTasks();
+  }
+
+  public get emptyStateMessage(): string {
+    const key = this.config.emptyStateKeys[this.selectedTab];
+    return this.view[key] || this.view.emptyState;
+  }
+
+  public get modalTitle(): string {
+    return this.selectedTask
+      ? this.view.modalTitleEdit
+      : this.view.modalTitleCreate;
+  }
+
+  public onTabChange(tab: TaskTab): void {
+    this.selectedTab = tab;
+    this.loadTasks();
+  }
+
+  public onToggleTask(taskId: string): void {
+    this.taskManagementService.toggleTaskCompleted(taskId).subscribe();
+  }
+
+  public onToggleSubTask(event: { taskId: string; subTaskId: string }): void {
+    this.taskManagementService
+      .toggleSubTask(event.taskId, event.subTaskId)
+      .subscribe();
+  }
+
+  public onDeleteTask(taskId: string): void {
+    this.taskManagementService.deleteTask(taskId).subscribe();
+  }
+
+  public onFilterChange(categoryIds: string[]): void {
+    this.selectedCategoryIds = categoryIds;
+    this.loadTasks();
+  }
+
+  public onAddTask(): void {
+    this.selectedTask = undefined;
+    this.showTaskModal = true;
+  }
+
+  public onEditTask(task: Task): void {
+    this.selectedTask = task;
+    this.showTaskModal = true;
+  }
+
+  public onSaveTask(taskDto: CreateTaskDto | UpdateTaskDto): void {
+    if (this.taskManagementService.isUpdateDto(taskDto)) {
+      this.taskManagementService.updateTask(taskDto).subscribe(() => {
+        this.closeTaskModal();
+      });
+    } else {
+      this.taskManagementService.createTask(taskDto).subscribe(() => {
+        this.closeTaskModal();
+      });
+    }
+  }
+
+  public closeTaskModal(): void {
+    this.showTaskModal = false;
+    this.selectedTask = undefined;
+  }
+
+  public getCategoryForTask(task: Task): Category | undefined {
+    return this.categoryManagementService.getCategoryById(
+      this.categoriesMap,
+      task.categoryId
+    );
+  }
+
+  public goToCategories(): void {
+    this.navigate(this.config.routes.categories);
+  }
+
+  public goBackToHome(): void {
+    this.navigate(this.config.routes.home);
   }
 
   private async setupI18n(): Promise<void> {
@@ -67,137 +152,22 @@ export class TaskListPage extends BasePage implements OnInit {
 
   private loadTasks(): void {
     this.tasks$ = combineLatest([
-      this.taskInteractor.getTasks(),
-      this.categoryInteractor.getCategories(),
+      this.taskManagementService.getTasks(),
+      this.categoryManagementService.getCategories(),
     ]).pipe(
       map(([tasks, categories]) => {
-        this.categoriesMap = new Map(categories.map((c) => [c.id, c]));
-
-        let filteredTasks = tasks;
-
-        if (this.selectedCategoryIds.length > 0) {
-          filteredTasks = filteredTasks.filter((task) =>
-            this.selectedCategoryIds.includes(task.categoryId || '')
-          );
-        }
-
-        switch (this.selectedTab) {
-          case 'completed':
-            return filteredTasks.filter((task) => task.completed);
-          case 'overdue':
-            return filteredTasks.filter((task) => {
-              if (!task.dueDate || task.completed) return false;
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
-              const dueDate = new Date(task.dueDate);
-              dueDate.setHours(0, 0, 0, 0);
-              return dueDate < today;
-            });
-          default:
-            return filteredTasks.filter((task) => {
-              if (task.completed) return false;
-              if (!task.dueDate) return true;
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
-              const dueDate = new Date(task.dueDate);
-              dueDate.setHours(0, 0, 0, 0);
-              return dueDate >= today;
-            });
-        }
+        this.categoriesMap =
+          this.categoryManagementService.createCategoriesMap(categories);
+        return this.taskFilterService.applyFilters(
+          tasks,
+          this.selectedCategoryIds,
+          this.selectedTab
+        );
       })
     );
   }
 
   private loadCategories(): void {
-    this.categories$ = this.categoryInteractor.getCategories();
-  }
-
-  onTabChange(tab: TaskTab): void {
-    this.selectedTab = tab;
-    this.loadTasks();
-  }
-
-  onToggleTask(taskId: string): void {
-    this.taskInteractor.toggleTaskCompleted(taskId).subscribe();
-  }
-
-  onToggleSubTask(event: { taskId: string; subTaskId: string }): void {
-    this.taskInteractor
-      .getTasks()
-      .pipe(take(1))
-      .subscribe((tasks) => {
-        const task = tasks.find((t) => t.id === event.taskId);
-        if (task && task.subTasks) {
-          const updatedSubTasks = task.subTasks.map((st) =>
-            st.id === event.subTaskId ? { ...st, completed: !st.completed } : st
-          );
-          this.taskInteractor
-            .updateTask({ id: task.id, subTasks: updatedSubTasks })
-            .subscribe();
-        }
-      });
-  }
-
-  onDeleteTask(taskId: string): void {
-    this.taskInteractor.deleteTask(taskId).subscribe();
-  }
-
-  onFilterChange(categoryIds: string[]): void {
-    this.selectedCategoryIds = categoryIds;
-    this.loadTasks();
-  }
-
-  onAddTask(): void {
-    this.selectedTask = undefined;
-    this.showTaskModal = true;
-  }
-
-  onEditTask(task: Task): void {
-    this.selectedTask = task;
-    this.showTaskModal = true;
-  }
-
-  onSaveTask(taskDto: CreateTaskDto | UpdateTaskDto): void {
-    if ('id' in taskDto) {
-      this.taskInteractor.updateTask(taskDto as UpdateTaskDto).subscribe(() => {
-        this.closeTaskModal();
-        this.loadTasks();
-      });
-    } else {
-      this.taskInteractor.createTask(taskDto as CreateTaskDto).subscribe(() => {
-        this.closeTaskModal();
-        this.loadTasks();
-      });
-    }
-  }
-
-  closeTaskModal(): void {
-    this.showTaskModal = false;
-    this.selectedTask = undefined;
-  }
-
-  getCategoryForTask(task: Task): Category | undefined {
-    return task.categoryId
-      ? this.categoriesMap.get(task.categoryId)
-      : undefined;
-  }
-
-  goToCategories(): void {
-    this.navigate(this.config.routes.categories);
-  }
-
-  goBackToHome(): void {
-    this.navigate(this.config.routes.home);
-  }
-
-  get emptyStateMessage(): string {
-    switch (this.selectedTab) {
-      case 'completed':
-        return this.view.emptyCompleted;
-      case 'overdue':
-        return this.view.emptyOverdue;
-      default:
-        return this.view.emptyState;
-    }
+    this.categories$ = this.categoryManagementService.getCategories();
   }
 }

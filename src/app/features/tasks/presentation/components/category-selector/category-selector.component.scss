@@ -89,7 +89,7 @@ ion-list {
   }
 
   &.selected {
-    --background: rgba(102, 126, 234, 0.1);
+    --background: var(--app-primary-overlay);
   }
 
   &:hover {

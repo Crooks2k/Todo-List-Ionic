@@ -20,38 +20,30 @@ export class CategoryFilterComponent implements OnInit {
 
   public readonly config = CategoryFilterConfig;
   public labels: any = {};
-  showFilterModal = false;
-  searchTerm = '';
+  public showFilterModal = false;
+  public searchTerm = '';
 
   constructor(private translateProvider: TranslateProvider) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.setupI18n();
   }
 
-  private async setupI18n(): Promise<void> {
-    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
-    this.labels = this.translateProvider.getObject(this.config.i18n.component);
-  }
-
-  get selectedCount(): number {
+  public get selectedCount(): number {
     return this.selectedCategoryIds.length;
   }
 
-  get filterLabel(): string {
+  public get filterLabel(): string {
     if (this.selectedCount === 0) {
       return this.labels.allCategories || '';
     }
     if (this.selectedCount === 1) {
-      const category = this.categories.find(
-        (c) => c.id === this.selectedCategoryIds[0]
-      );
-      return category?.name || this.labels.filter || '';
+      return this.getSelectedCategoryName();
     }
     return `${this.selectedCount} ${this.labels.categoriesCount || ''}`;
   }
 
-  get filteredCategories(): Category[] {
+  public get filteredCategories(): Category[] {
     if (!this.searchTerm.trim()) {
       return this.categories;
     }
@@ -61,17 +53,29 @@ export class CategoryFilterComponent implements OnInit {
     );
   }
 
-  openFilterModal(): void {
+  public get hasCategories(): boolean {
+    return this.categories.length > 0;
+  }
+
+  public get hasFilteredResults(): boolean {
+    return this.filteredCategories.length > 0;
+  }
+
+  public get hasSelectedFilters(): boolean {
+    return this.selectedCount > 0;
+  }
+
+  public openFilterModal(): void {
     this.showFilterModal = true;
     this.searchTerm = '';
   }
 
-  closeFilterModal(): void {
+  public closeFilterModal(): void {
     this.showFilterModal = false;
     this.searchTerm = '';
   }
 
-  toggleCategory(categoryId: string, event?: Event): void {
+  public toggleCategory(categoryId: string, event?: Event): void {
     if (event) {
       event.stopPropagation();
     }
@@ -85,17 +89,33 @@ export class CategoryFilterComponent implements OnInit {
     }
   }
 
-  isCategorySelected(categoryId: string): boolean {
+  public isCategorySelected(categoryId: string): boolean {
     return this.selectedCategoryIds.includes(categoryId);
   }
 
-  clearFilters(): void {
+  public clearFilters(): void {
     this.selectedCategoryIds = [];
     this.applyFilters();
   }
 
-  applyFilters(): void {
+  public applyFilters(): void {
     this.filterChange.emit(this.selectedCategoryIds);
     this.closeFilterModal();
+  }
+
+  public getCategoryIcon(category: Category): string {
+    return category.icon || this.config.defaults.icon;
+  }
+
+  private async setupI18n(): Promise<void> {
+    await this.translateProvider.loadModule(this.config.i18n.moduleKey);
+    this.labels = this.translateProvider.getObject(this.config.i18n.component);
+  }
+
+  private getSelectedCategoryName(): string {
+    const category = this.categories.find(
+      (c) => c.id === this.selectedCategoryIds[0]
+    );
+    return category?.name || this.labels.filter || '';
   }
 }
