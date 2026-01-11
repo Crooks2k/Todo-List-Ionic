@@ -1,4 +1,44 @@
 <ion-content [fullscreen]="true" class="home-content">
+  @if (loading) {
+  <div class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @if (!loading && isInMaintenance) {
+  <div class="maintenance-container">
+    <div class="maintenance-card">
+      <div class="maintenance-icon-wrapper">
+        <div class="icon-circle">
+          <ion-icon
+            [name]="maintenanceMode?.icon || 'construct-outline'"
+            class="maintenance-icon"
+          ></ion-icon>
+        </div>
+      </div>
+
+      <h1 class="maintenance-title">{{ maintenanceMode?.title }}</h1>
+      <p class="maintenance-message">{{ maintenanceMode?.message }}</p>
+
+      @if (maintenanceMode?.endDate) {
+      <div class="maintenance-info">
+        <div class="info-badge">
+          <ion-icon name="time-outline"></ion-icon>
+          <span
+            >{{ view.maintenance?.estimatedTime }}:
+            {{ maintenanceMode?.endDate | date : 'short' }}</span
+          >
+        </div>
+      </div>
+      }
+
+      <div class="maintenance-divider"></div>
+
+      <div class="maintenance-footer">
+        <ion-icon name="heart" class="heart-icon"></ion-icon>
+        <span>Gracias por tu paciencia</span>
+      </div>
+    </div>
+  </div>
+  } @if (!loading && !isInMaintenance) {
   <div class="home-container">
     <div class="home-header">
       <ion-icon name="checkmark-circle" class="home-icon"></ion-icon>
@@ -32,4 +72,5 @@
       ></app-action-card>
     </div>
   </div>
+  }
 </ion-content>

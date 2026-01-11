@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { RemoteConfigInteractor } from '@app/config/core/interactors/remote-config.interactor';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,4 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
-  constructor() {}
-}
+export class AppComponent {}
