@@ -17,7 +17,15 @@
       "title": "Categorías",
       "emptyState": "No tienes categorías",
       "emptyStateDescription": "Crea tu primera categoría para organizar tus tareas",
-      "addButton": "Agregar Categoría"
+      "addButton": "Agregar Categoría",
+      "modalTitleCreate": "Nueva Categoría",
+      "modalTitleEdit": "Editar Categoría",
+      "deleteConfirmTitle": "Eliminar categoría",
+      "deleteConfirmMessage": "¿Eliminar '{name}'? Las tareas asociadas se mantendrán, pero deberás crear la categoría nuevamente para usarla.",
+      "cancelButton": "Cancelar",
+      "deleteButton": "Eliminar",
+      "deleteSuccess": "Categoría eliminada correctamente",
+      "deleteError": "Error al eliminar la categoría"
     }
   },
   "components": {
