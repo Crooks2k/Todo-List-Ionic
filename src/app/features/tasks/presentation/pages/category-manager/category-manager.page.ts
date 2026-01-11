@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import {
   Category,
@@ -30,7 +30,9 @@ export class CategoryManagerPage extends BasePage implements OnInit {
 
   constructor(
     private categoryManagementService: CategoryManagementService,
-    private translateProvider: TranslateProvider
+    private translateProvider: TranslateProvider,
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {
     super();
   }
@@ -74,8 +76,44 @@ export class CategoryManagerPage extends BasePage implements OnInit {
     }
   }
 
-  public onDeleteCategory(categoryId: string): void {
-    this.categoryManagementService.deleteCategory(categoryId).subscribe();
+  public async onDeleteCategory(category: Category): Promise<void> {
+    const alert = await this.alertController.create({
+      header: this.view.deleteConfirmTitle,
+      message: this.view.deleteConfirmMessage.replace('{name}', category.name),
+      buttons: [
+        {
+          text: this.view.cancelButton,
+          role: 'cancel',
+        },
+        {
+          text: this.view.deleteButton,
+          role: 'destructive',
+          handler: () => {
+            this.categoryManagementService
+              .deleteCategory(category.id)
+              .subscribe({
+                next: () => {
+                  this.showToast(this.view.deleteSuccess);
+                },
+                error: () => {
+                  this.showToast(this.view.deleteError);
+                },
+              });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  private async showToast(message: string): Promise<void> {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    await toast.present();
   }
 
   public closeModal(): void {

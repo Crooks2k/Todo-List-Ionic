@@ -3,7 +3,7 @@
     <name>TodoList</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -14,8 +14,15 @@
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="22" />
     <preference name="BackupWebStorage" value="none" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+    <preference name="KeyboardResize" value="true" />
+    <preference name="KeyboardResizeMode" value="ionic" />
     <platform name="android">
         <preference name="Scheme" value="http" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:networkSecurityConfig="@xml/network_security_config" />
+        </edit-config>
+        <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
@@ -23,4 +30,5 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <allow-navigation href="http://localhost:8100" sessionid="f9f2546d" />
+    <allow-navigation href="http://192.168.1.237:8100" sessionid="7559b6d3" />
 </widget>

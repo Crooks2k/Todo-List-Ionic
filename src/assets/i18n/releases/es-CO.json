@@ -1,0 +1,15 @@
+{
+  "releases": {
+    "title": "Novedades",
+    "loading": "Cargando novedades...",
+    "empty": {
+      "title": "Sin novedades",
+      "message": "No hay notas de versión disponibles en este momento"
+    },
+    "sections": {
+      "features": "Nuevas características",
+      "improvements": "Mejoras",
+      "fixes": "Correcciones"
+    }
+  }
+}

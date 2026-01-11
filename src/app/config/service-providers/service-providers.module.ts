@@ -7,6 +7,11 @@ import { LocalStorageDataSource } from '@features/tasks/data/datasources/local-s
 import { TaskInteractor } from '@features/tasks/core/interactors/task.interactor';
 import { CategoryInteractor } from '@features/tasks/core/interactors/category.interactor';
 
+import { RemoteConfigRepository } from '@app/config/core/domain/repositories/remote-config.repository';
+import { RemoteConfigRepositoryImpl } from '@app/config/data/repositories/remote-config.repository.impl';
+import { RemoteConfigInteractor } from '@app/config/core/interactors/remote-config.interactor';
+import { FirebaseRemoteConfigDataSource } from '@app/config/data/datasources/firebase-remote-config.datasource';
+
 @NgModule({
   providers: [
     LocalStorageDataSource,
@@ -14,6 +19,10 @@ import { CategoryInteractor } from '@features/tasks/core/interactors/category.in
     { provide: CategoryRepository, useClass: CategoryRepositoryImpl },
     TaskInteractor,
     CategoryInteractor,
+
+    FirebaseRemoteConfigDataSource,
+    { provide: RemoteConfigRepository, useClass: RemoteConfigRepositoryImpl },
+    RemoteConfigInteractor,
   ],
 })
 export class ServiceProvidersModule {}

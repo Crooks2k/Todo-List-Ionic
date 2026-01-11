@@ -5,16 +5,106 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Novedades</ion-title>
+    <ion-title>{{ view.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="content-wrapper">
+    <!-- Loading State -->
+    @if (loading) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>{{ view.loading }}</p>
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (!loading && releaseNotes.length === 0) {
     <div class="empty-state">
       <ion-icon name="newspaper-outline"></ion-icon>
-      <h3>Próximamente</h3>
-      <p>Aquí encontrarás las últimas novedades y actualizaciones</p>
+      <h3>{{ view.empty.title }}</h3>
+      <p>{{ view.empty.message }}</p>
     </div>
+    }
+
+    <!-- Release Notes List -->
+    @if (!loading && releaseNotes.length > 0) {
+    <div class="releases-list">
+      @for (release of releaseNotes; track release.version) {
+      <div class="release-card">
+        <!-- Header -->
+        <div class="release-header">
+          <div class="version-badge">
+            <ion-icon name="pricetag"></ion-icon>
+            <span>v{{ release.version }}</span>
+          </div>
+          <div class="release-date">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>{{ release.date }}</span>
+          </div>
+        </div>
+
+        <!-- Title & Description -->
+        <h2 class="release-title">{{ release.title }}</h2>
+        <p class="release-description">{{ release.description }}</p>
+
+        <!-- Features -->
+        @if (release.features && release.features.length > 0) {
+        <div class="release-section">
+          <h3 class="section-title">
+            <ion-icon name="sparkles" color="success"></ion-icon>
+            {{ view.sections.features }}
+          </h3>
+          <ul class="feature-list">
+            @for (feature of release.features; track $index) {
+            <li>
+              <ion-icon name="checkmark-circle" color="success"></ion-icon>
+              {{ feature }}
+            </li>
+            }
+          </ul>
+        </div>
+        }
+
+        <!-- Improvements -->
+        @if (release.improvements && release.improvements.length > 0) {
+        <div class="release-section">
+          <h3 class="section-title">
+            <ion-icon name="trending-up" color="primary"></ion-icon>
+            {{ view.sections.improvements }}
+          </h3>
+          <ul class="feature-list">
+            @for (improvement of release.improvements; track $index) {
+            <li>
+              <ion-icon name="arrow-up-circle" color="primary"></ion-icon>
+              {{ improvement }}
+            </li>
+            }
+          </ul>
+        </div>
+        }
+
+        <!-- Fixes -->
+        @if (release.fixes && release.fixes.length > 0) {
+        <div class="release-section">
+          <h3 class="section-title">
+            <ion-icon name="build" color="warning"></ion-icon>
+            {{ view.sections.fixes }}
+          </h3>
+          <ul class="feature-list">
+            @for (fix of release.fixes; track $index) {
+            <li>
+              <ion-icon name="hammer" color="warning"></ion-icon>
+              {{ fix }}
+            </li>
+            }
+          </ul>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
   </div>
 </ion-content>

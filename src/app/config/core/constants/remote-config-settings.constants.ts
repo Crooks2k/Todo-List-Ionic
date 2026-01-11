@@ -1,0 +1,4 @@
+export const REMOTE_CONFIG_SETTINGS = {
+  FETCH_TIMEOUT: 60000,
+  MIN_FETCH_INTERVAL: 0,
+} as const;
