@@ -20,6 +20,7 @@
     "lib": ["es2018", "dom"],
     "useDefineForClassFields": false,
     "paths": {
+      "@app/*": ["src/app/*"],
       "@shared/*": ["src/app/shared/*"],
       "@features/home/*": ["src/app/features/home/*"],
       "@features/tasks/*": ["src/app/features/tasks/*"],

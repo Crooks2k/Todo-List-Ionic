@@ -13,6 +13,9 @@
     "messages": {
       "noTasks": "No tienes tareas pendientes",
       "loading": "Cargando..."
+    },
+    "maintenance": {
+      "estimatedTime": "Tiempo estimado"
     }
   }
 }
