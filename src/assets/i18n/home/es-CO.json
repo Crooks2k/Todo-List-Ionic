@@ -15,7 +15,8 @@
       "loading": "Cargando..."
     },
     "maintenance": {
-      "estimatedTime": "Tiempo estimado"
+      "estimatedTime": "Tiempo estimado",
+      "thankYou": "Gracias por tu paciencia"
     }
   }
 }

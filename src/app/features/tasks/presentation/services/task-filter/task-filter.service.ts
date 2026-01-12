@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from '@features/tasks/core/domain/entities/task.entity';
 import { isDateOverdue } from '@shared/utils/date';
-import { TaskTab } from '../pages/task-list/task-list.config';
+import { TaskTab } from '../../pages/task-list/task-list.config';
 
 @Injectable()
 export class TaskFilterService {
