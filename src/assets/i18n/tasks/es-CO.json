@@ -11,7 +11,13 @@
       "emptyOverdue": "No hay tareas vencidas",
       "addButton": "Agregar Tarea",
       "modalTitleCreate": "Nueva Tarea",
-      "modalTitleEdit": "Editar Tarea"
+      "modalTitleEdit": "Editar Tarea",
+      "deleteConfirmTitle": "Eliminar tarea",
+      "deleteConfirmMessage": "¿Estás seguro de eliminar '{title}'? Esta acción no se puede deshacer.",
+      "cancelButton": "Cancelar",
+      "deleteButton": "Eliminar",
+      "deleteSuccess": "Tarea eliminada correctamente",
+      "deleteError": "Error al eliminar la tarea"
     },
     "categoryManager": {
       "title": "Categorías",

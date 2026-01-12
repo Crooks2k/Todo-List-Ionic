@@ -28,8 +28,8 @@ export class ReleasesListPage extends BasePage implements OnInit {
     super();
   }
 
-  async ngOnInit(): Promise<void> {
-    await this.setupI18n();
+  ngOnInit(): void {
+    this.setupI18n();
     this.loadReleaseNotes();
   }
 
