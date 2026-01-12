@@ -5,12 +5,10 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-  SimpleChanges,
-  ViewChild,
-  ElementRef,
+  SimpleChanges
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, IonInput } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   Task,
