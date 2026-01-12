@@ -1,6 +1,6 @@
 export const REMOTE_CONFIG_KEYS = {
   RELEASE_NOTES: 'release_notes',
-  MAINTENANCE_MODE: 'maintenance_mode_v3',
+  MAINTENANCE_MODE: 'maintenance_mode',
 } as const;
 
 export type RemoteConfigKeyType =

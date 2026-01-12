@@ -50,6 +50,12 @@
   }
 }
 
+// Virtual Scroll Container
+ion-virtual-scroll {
+  height: calc(100vh - 200px); // Ajusta según tu header/tabs
+  padding: var(--app-spacing-md);
+}
+
 .tasks-container {
   padding: var(--app-spacing-md);
 }
