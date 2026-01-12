@@ -5,9 +5,6 @@ import { TaskTab } from '../pages/task-list/task-list.config';
 
 @Injectable()
 export class TaskFilterService {
-  /**
-   * Filtra tareas por categorías seleccionadas
-   */
   public filterByCategories(
     tasks: Task[],
     selectedCategoryIds: string[]
@@ -20,9 +17,6 @@ export class TaskFilterService {
     );
   }
 
-  /**
-   * Filtra tareas por tab (todas, completadas, vencidas)
-   */
   public filterByTab(tasks: Task[], tab: TaskTab): Task[] {
     switch (tab) {
       case 'completed':
@@ -34,9 +28,6 @@ export class TaskFilterService {
     }
   }
 
-  /**
-   * Aplica todos los filtros a las tareas
-   */
   public applyFilters(
     tasks: Task[],
     selectedCategoryIds: string[],
@@ -49,16 +40,10 @@ export class TaskFilterService {
     return this.filterByTab(filteredByCategory, tab);
   }
 
-  /**
-   * Obtiene solo las tareas completadas
-   */
   private getCompletedTasks(tasks: Task[]): Task[] {
     return tasks.filter((task) => task.completed);
   }
 
-  /**
-   * Obtiene solo las tareas vencidas (no completadas)
-   */
   private getOverdueTasks(tasks: Task[]): Task[] {
     return tasks.filter((task) => {
       if (!task.dueDate || task.completed) return false;
@@ -66,9 +51,6 @@ export class TaskFilterService {
     });
   }
 
-  /**
-   * Obtiene solo las tareas activas (no completadas y no vencidas)
-   */
   private getActiveTasks(tasks: Task[]): Task[] {
     return tasks.filter((task) => {
       if (task.completed) return false;
