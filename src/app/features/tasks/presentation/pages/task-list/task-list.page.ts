@@ -224,14 +224,12 @@ export class TaskListPage extends BasePage implements OnInit {
         this.categoriesMap =
           this.categoryManagementService.createCategoriesMap(categories);
 
-        // Filtrar todas las tareas
         this.allTasks = this.taskFilterService.applyFilters(
           tasks,
           this.selectedCategoryIds,
           this.selectedTab
         );
 
-        // Retornar solo las tareas de las páginas cargadas
         const endIndex = currentPage * this.PAGE_SIZE;
         return this.allTasks.slice(0, endIndex);
       })

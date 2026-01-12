@@ -50,9 +50,8 @@
   }
 }
 
-// Virtual Scroll Container
 ion-virtual-scroll {
-  height: calc(100vh - 200px); // Ajusta según tu header/tabs
+  height: calc(100vh - 200px);
   padding: var(--app-spacing-md);
 }
 
