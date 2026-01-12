@@ -58,6 +58,17 @@
       </div>
       }
     </div>
+
+    <ion-infinite-scroll
+      (ionInfinite)="loadMore($event)"
+      threshold="100px"
+      [disabled]="!hasMoreTasks"
+    >
+      <ion-infinite-scroll-content
+        loadingSpinner="crescent"
+        loadingText="Cargando más tareas..."
+      ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

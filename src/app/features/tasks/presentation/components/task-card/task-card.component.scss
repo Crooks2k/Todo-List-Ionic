@@ -196,6 +196,23 @@
   }
 }
 
+.delete-button {
+  --padding-start: var(--app-spacing-xs);
+  --padding-end: var(--app-spacing-xs);
+  --color: var(--app-text-secondary);
+  margin: 0;
+  height: 32px;
+  width: 32px;
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  &:hover {
+    --color: var(--ion-color-danger);
+  }
+}
+
 .subtasks-container {
   margin-top: var(--app-spacing-sm);
   padding: var(--app-spacing-md);
